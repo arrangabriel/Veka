@@ -1,0 +1,23 @@
+#facebookIcon{
+    background-image:url("./img/icons8-facebook-48.png");
+    background-repeat: no-repeat;
+    width: 5rem;
+    height: 5rem;
+  }
+  
+  #twitterIcon{
+    background-image:url('./img/icons8-twitter-48.png');
+    background-repeat: no-repeat;
+    width: 5rem;
+    height: 5rem;
+  }
+  
+  #googleIcon{
+    background-image: url("./img/icons8-google-48.png");
+    background-repeat: no-repeat;
+    width: 5rem;
+    height: 5rem;
+  }
+  h1{
+      color: blueviolet;
+  }

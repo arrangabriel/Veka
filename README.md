@@ -1,3 +1,3 @@
-# Frontend
+# Project
 
-The project front-end
+The project frontend and backend.

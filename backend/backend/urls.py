@@ -17,6 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('appname/', include('appname.urls')),
+    path('veka/', include('veka.urls')),
     path('admin/', admin.site.urls),
 ]

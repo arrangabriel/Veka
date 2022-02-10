@@ -3,8 +3,8 @@ import Innlegg from './components/Innlegg/Innlegg'
 
 function App() {
   return (
-    <div className="App">
-      <Innlegg></Innlegg>
+    <div>
+      
     </div>
   );
 }

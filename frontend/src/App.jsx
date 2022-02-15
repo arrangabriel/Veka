@@ -7,6 +7,7 @@ import LoginForm from './components/Innlegg/LoginForm';
 import SignUp from './components/Innlegg/SignUp';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import UserPost from './components/Innlegg/UserPost';
 
 function App() {
   return (
@@ -29,14 +30,13 @@ function App() {
       </nav>
 
       <div className="auth-wrapper">
-        <Routes>
-        <Route exact path='/' element={<Innlegg/>} />
-        </Routes>
-
         <div className="auth-inner">
           <Routes>
+            <Route exact path='/' element={<Innlegg/>} />
             <Route path="/sign-in" element={<LoginForm/>} />
             <Route path="/sign-up" element={<SignUp/>} />
+            <Route path="/add-post" element={<UserPost/>} />
+            
           </Routes>
         </div>
       </div>

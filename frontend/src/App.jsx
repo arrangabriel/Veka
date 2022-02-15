@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
     <div>
-      {/* <LoginForm></LoginForm> */}
+      <LoginForm></LoginForm>
       <Button variant="secondary">My button</Button>
     </div>
   );

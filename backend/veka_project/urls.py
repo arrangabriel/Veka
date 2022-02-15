@@ -20,5 +20,5 @@ from users import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^api/profiles/', views.profiles_list)
+    re_path(r'^api/profiles/$', views.profiles_list)
 ]

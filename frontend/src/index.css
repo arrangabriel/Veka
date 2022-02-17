@@ -45,6 +45,7 @@ body, html, .App, #root, .auth-wrapper {
   justify-content: center;
   flex-direction: column;
   text-align: left;
+  margin-top: 140px;
 }
 
 .auth-inner {

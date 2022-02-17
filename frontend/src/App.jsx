@@ -3,11 +3,10 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Popup from './components/Innlegg/Popup';
+import ListingView from './components/Innlegg/UserPost/ListingView'
 
-import Innlegg from './components/Innlegg/Innlegg'
 import LoginForm from './components/Innlegg/LoginForm';
 import SignUp from './components/Innlegg/SignUp';
-import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UserPost from './components/Innlegg/UserPost';
 
@@ -52,7 +51,7 @@ function App() {
       <div className="auth-wrapper">
         <div className="auth-inner">
           <Routes>
-            <Route exact path='/' element={<Innlegg/>} />
+            <Route exact path='/' element={<ListingView/>} />
             <Route path="/sign-in" element={<LoginForm/>} />
             <Route path="/sign-up" element={<SignUp/>} />
             <Route path="/add-post" element={<UserPost/>} />

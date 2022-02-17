@@ -1,6 +1,8 @@
+import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import Popup from './components/Innlegg/Popup';
 
 import Innlegg from './components/Innlegg/Innlegg'
 import LoginForm from './components/Innlegg/LoginForm';
@@ -10,6 +12,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import UserPost from './components/Innlegg/UserPost';
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+ 
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  }
   return (
     <Router>
     <div className="App">
@@ -28,6 +35,19 @@ function App() {
           </div>
         </div>
       </nav>
+
+      <input
+      type="button"
+      value="Click to Open Popup"
+      onClick={togglePopup}
+      />
+
+      {isOpen && <Popup
+      content={<>
+        <UserPost></UserPost>
+      </>}
+      handleClose={togglePopup}
+    />}
 
       <div className="auth-wrapper">
         <div className="auth-inner">

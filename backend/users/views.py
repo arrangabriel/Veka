@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 
 @api_view(['GET'])
@@ -46,13 +47,22 @@ def logout_user(request):
     return Response(status=status.HTTP_200_OK)
 
 @api_view(['POST'])
-def edit_bio(request):
+def edit(request):
     if request.method == 'POST':
         bio = request.data.get('bio')
+        location = request.data.get('location')
         if request.user.is_authenticated:
             profile = Profile.objects.get(user=request.user.id)
-            profile.bio = bio
-            profile.save()
-            return Response(status=status.HTTP_200_OK)
+            if (bio):
+                profile.bio = bio
+            if (location):
+                profile.location = location
+            try: 
+                profile.full_clean()
+                profile.save()
+                return Response(status=status.HTTP_200_OK)
+            except ValidationError as e:
+                #TODO: Make custom error message
+                return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)

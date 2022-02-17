@@ -16,13 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework import routers
-from users import views
+from users import views as userViews
+from listings import views as listingViews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^api/profiles/$', views.profiles_list),
-    re_path(r'^api/registration/$', views.register_user),
-    re_path(r'^api/login/$', views.login_user),
-    re_path(r'^api/bio/$', views.edit_bio),
-    re_path(r'^api/logout/$', views.logout_user)
+    re_path(r'^api/profiles/$', userViews.profiles_list),
+    re_path(r'^api/registration/$', userViews.register_user),
+    re_path(r'^api/login/$', userViews.login_user),
+    re_path(r'^api/bio/$', userViews.edit_bio),
+    re_path(r'^api/logout/$', userViews.logout_user),
+    re_path(r'^api/listings/$', listingViews.listings),
 ]

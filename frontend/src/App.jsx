@@ -54,6 +54,7 @@ function App() {
             <Route exact path='/' element={<ListingView/>} />
             <Route path="/sign-in" element={<LoginForm/>} />
             <Route path="/sign-up" element={<SignUp/>} />
+            <Route path="/sign-up#" element={<LoginForm/>} />
             <Route path="/add-post" element={<UserPost/>} />
             <Route path="/my-user" element={LoginForm} />
 

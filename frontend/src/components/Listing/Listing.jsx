@@ -1,5 +1,5 @@
 import React from 'react'
-import './listing.css';
+import './Listing.css';
 
 const Listing = ({header,date,description,img,publisher}) => {
   return (
@@ -13,13 +13,13 @@ const Listing = ({header,date,description,img,publisher}) => {
 
 // se her for andre versjoner av card klassene: https://getbootstrap.com/docs/4.0/components/card/
 
-  <div class="card mb-3">
-  <h5 class="card-header">{header}</h5>
-    <div class="card-body">
-      <p class="card-text">{description}</p>
-      <p class="card-text"><small class="text-muted">{date}</small></p>
-      <button class="button1">{publisher}</button>
-      <button class="intr button">Se annonse</button>
+  <div className="card mb-3">
+  <h5 className="card-header">{header}</h5>
+    <div className="card-body">
+      <p className="card-text">{description}</p>
+      <p className="card-text"><small className="text-muted">{date}</small></p>
+      <button className="button1">{publisher}</button>
+      <button className="intr button">Se annonse</button>
     </div>
   </div>
   )

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import ListingView from './components/Innlegg/UserPost/ListingView'
-import Popup from './components/Innlegg/Popup';
+import ListingView from './components/Listing/ListingView'
+import Popup from './components/Popup/Popup';
 
-import LoginForm from './components/Innlegg/LoginForm';
-import SignUp from './components/Innlegg/SignUp';
+import Login from './components/Login/Login';
+import SignUp from './components/SignUp/SignUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UserPost from './components/Innlegg/UserPost';
+import CreateListing from './components/Listing/CreateListing';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +43,7 @@ function App() {
 
       {isOpen && <Popup
       content={<>
-        <UserPost></UserPost>
+        <CreateListing></CreateListing>
       </>}
       handleClose={togglePopup}
       />}
@@ -52,11 +52,11 @@ function App() {
         <div className="auth-inner">
           <Routes>
             <Route exact path='/' element={<ListingView/>} />
-            <Route path="/sign-in" element={<LoginForm/>} />
+            <Route path="/sign-in" element={<Login/>} />
             <Route path="/sign-up" element={<SignUp/>} />
-            <Route path="/sign-up#" element={<LoginForm/>} />
-            <Route path="/add-post" element={<UserPost/>} />
-            <Route path="/my-user" element={LoginForm} />
+            <Route path="/sign-up#" element={<Login/>} />
+            <Route path="/add-post" element={<CreateListing/>} />
+            <Route path="/my-user" element={Login} />
 
           </Routes>
         </div>

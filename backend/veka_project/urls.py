@@ -19,12 +19,15 @@ from rest_framework import routers
 from users import views as userViews
 from listings import views as listingViews
 
+router = routers.DefaultRouter()
+router.register(r'listings2', listingViews.ListingViewSet, basename='listing')
+
 urlpatterns = [
+    path('', include(router.urls)),
     path('admin/', admin.site.urls),
     re_path(r'^api/profiles/$', userViews.profiles_list),
     re_path(r'^api/registration/$', userViews.register_user),
     re_path(r'^api/login/$', userViews.login_user),
     re_path(r'^api/bio/$', userViews.edit_bio),
     re_path(r'^api/logout/$', userViews.logout_user),
-    re_path(r'^api/listings/$', listingViews.listings),
 ]

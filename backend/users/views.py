@@ -2,24 +2,20 @@ from .serializers import ProfileSerializer
 from .models import Profile
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import status
+from rest_framework import status, viewsets
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 
-@api_view(['GET'])
-def profiles_list(request):
-    if request.method == 'GET':
-        data = Profile.objects.all()
-        serializer = ProfileSerializer(data, context={'request': request}, many=True)
+class ProfilesViewSet(viewsets.ViewSet):
+    
+    def list(self, request):
+        queryset = Profile.objects.all()
+        serializer = ProfileSerializer(queryset, many=True)
         return Response(serializer.data)
-            
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-def register_user(request):
-    if request.method == 'POST':
+    def create(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
         email = request.data.get('email')
@@ -29,9 +25,10 @@ def register_user(request):
         except IntegrityError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-def login_user(request):
-    if request.method == 'POST':
+
+class LoginViewSet(viewsets.ViewSet):
+
+    def create(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
         user = authenticate(request, username=username, password=password)
@@ -41,14 +38,17 @@ def login_user(request):
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-@api_view(['POST'])
-def logout_user(request):
-    logout(request)
-    return Response(status=status.HTTP_200_OK)
 
-@api_view(['POST'])
-def edit(request):
-    if request.method == 'POST':
+class LogoutViewSet(viewsets.ViewSet):
+
+    def create(self, request):
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
+
+
+class EditViewSet(viewsets.ViewSet):
+
+    def create(self, request):
         bio = request.data.get('bio')
         location = request.data.get('location')
         if request.user.is_authenticated:
@@ -64,5 +64,3 @@ def edit(request):
             except ValidationError as e:
                 #TODO: Make custom error message
                 return Response(status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)

@@ -5,7 +5,7 @@ import Listing from './Listing';
 
 const ListingView = () => {
   return (
-    <div>
+    <div className='listingView'>
         {data.map((innlegg, index)=>(
             <Listing key={index} header={innlegg.event} description={innlegg.description} publisher={innlegg.publisher}></Listing>
         ))}

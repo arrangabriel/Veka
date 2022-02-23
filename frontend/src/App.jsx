@@ -19,7 +19,7 @@ function App() {
   return (
     <Router>
     <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-light">
         <div className="container">
           <Link className="navbar-brand" to={"/"}>Veka</Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
@@ -48,8 +48,6 @@ function App() {
       handleClose={togglePopup}
       />}
 
-      <div className="auth-wrapper">  
-        <div className="auth-inner">
           <Routes>
             <Route exact path='/' element={<ListingView/>} />
             <Route path="/sign-in" element={<Login/>} />
@@ -59,14 +57,13 @@ function App() {
             <Route path="/my-user" element={Login} />
 
           </Routes>
-        </div>
-        <input
-          type="button"
-          value="Klikk her for å legge ut innlegg"
-          onClick={togglePopup}
-        />
-      </div>
+          
     </div>
+    <input
+      type="button"
+      value="Klikk her for å legge ut innlegg"
+      onClick={togglePopup}
+    />
     </Router>
   );
 }

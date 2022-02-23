@@ -7,19 +7,6 @@
     border: 2px solid #4CAF50;
 }
 
-.card-img{
-    overflow:hidden;
-}
-
 .card{
     width: 500px;
-}
-
-.container{
-    width: 50%;
-    margin: 40px auto;
-}
-
-.listingView{
-    align-content: center;
 }

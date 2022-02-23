@@ -5,9 +5,9 @@ import Listing from './Listing';
 
 const ListingView = () => {
   return (
-    <div>
-        {data.map(innlegg=>(
-            <Listing header={innlegg.event} description={innlegg.description} publisher={innlegg.publisher}></Listing>
+    <div className='listingView'>
+        {data.map((innlegg, index)=>(
+            <Listing key={index} header={innlegg.event} description={innlegg.description} publisher={innlegg.publisher}></Listing>
         ))}
     </div>
   )

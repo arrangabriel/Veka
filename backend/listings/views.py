@@ -1,4 +1,4 @@
-from .serializers import ListingSerializer
+from .serializers import ListingReadSerializer, ListingWriteSerializer
 from .models import Listing, Profile
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -14,7 +14,7 @@ def listings(request):
     # TODO - filtering, adding options to the request i.e. location
     if request.method == 'GET':
         data = Listing.objects.all()
-        serializer = ListingSerializer(
+        serializer = ListingReadSerializer(
             data, context={'request': request}, many=True)
         return Response(serializer.data)
 
@@ -23,7 +23,7 @@ def listings(request):
         # Do not allow creation if user is not logged in
         if not request.user.is_authenticated:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-        serializer = ListingSerializer(data=request.data)
+        serializer = ListingWriteSerializer(data=request.data)
         if serializer.is_valid():
             data = serializer.validated_data
             # Set owner field to be profile of session user

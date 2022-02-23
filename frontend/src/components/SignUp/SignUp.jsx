@@ -3,31 +3,31 @@ import React from "react";
 const SignUp = () => {
     return (
         <form>
-            <h3>Sign Up</h3>
+            <h3>Registrer bruker</h3>
 
             <div className="form-group">
-                <label>First name</label>
-                <input type="text" className="form-control" placeholder="First name" />
+                <label>Fornavn</label>
+                <input type="text" className="form-control" placeholder="Fornavn" />
             </div>
 
             <div className="form-group">
-                <label>Last name</label>
-                <input type="text" className="form-control" placeholder="Last name" />
+                <label>Etternavn</label>
+                <input type="text" className="form-control" placeholder="Etternavn" />
             </div>
 
             <div className="form-group">
-                <label>Email address</label>
-                <input type="email" className="form-control" placeholder="Enter email" />
+                <label>E-postadresse</label>
+                <input type="email" className="form-control" placeholder="Skriv E-post" />
             </div>
 
             <div className="form-group">
-                <label>Password</label>
-                <input type="password" className="form-control" placeholder="Enter password" />
+                <label>Passord</label>
+                <input type="password" className="form-control" placeholder="Skriv passord" />
             </div>
 
-            <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+            <button type="submit" className="btn btn-primary btn-block">Registrer meg</button>
             <p className="forgot-password text-right">
-                Already registered <a href="/sign-in">sign in?</a>
+                Allerede registrert? <a href="/sign-in">Logg inn</a>
             </p>
         </form>
     );

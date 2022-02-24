@@ -9,7 +9,6 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
-<<<<<<< HEAD
 class ProfilesViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
@@ -33,35 +32,11 @@ class ProfilesViewSet(viewsets.ModelViewSet):
         email = request.POST['user.email']
         try:
             user = User.objects.create_user(username=username, email=email, password=password).save()
-=======
-
-@api_view(['GET'])
-def profiles_list(request):
-    if request.method == 'GET':
-        data = Profile.objects.all()
-        serializer = ProfileSerializer(
-            data, context={'request': request}, many=True)
-        return Response(serializer.data)
-
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['POST'])
-def register_user(request):
-    if request.method == 'POST':
-        username = request.data.get('username')
-        password = request.data.get('password')
-        email = request.data.get('email')
-        try:
-            User.objects.create_user(
-                username=username, email=email, password=password).save()
->>>>>>> 28f74b5aaecf853a9ea0b58d0d81b309585a069b
             return Response(status=status.HTTP_201_CREATED)
         except IntegrityError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-<<<<<<< HEAD
 class LoginViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
@@ -80,13 +55,6 @@ class LoginViewSet(viewsets.ModelViewSet):
     def create(self, request):
         username = request.POST['username']
         password = request.POST['password']
-=======
-@api_view(['POST'])
-def login_user(request):
-    if request.method == 'POST':
-        username = request.data.get('username')
-        password = request.data.get('password')
->>>>>>> 28f74b5aaecf853a9ea0b58d0d81b309585a069b
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
@@ -94,7 +62,6 @@ def login_user(request):
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
     def list(self, request):
         return Response(status=status.HTTP_200_OK)
 
@@ -125,19 +92,6 @@ class EditViewSet(viewsets.ViewSet):
     def create(self, request):
         bio = request.POST['bio']
         location = request.POST['location']
-=======
-
-@api_view(['POST'])
-def logout_user(request):
-    logout(request)
-    return Response(status=status.HTTP_200_OK)
-
-
-@api_view(['POST'])
-def edit_bio(request):
-    if request.method == 'POST':
-        bio = request.data.get('bio')
->>>>>>> 28f74b5aaecf853a9ea0b58d0d81b309585a069b
         if request.user.is_authenticated:
             profile = Profile.objects.get(user=request.user.id)
             if (bio):

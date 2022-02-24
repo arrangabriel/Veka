@@ -1,6 +1,4 @@
-from tkinter import CASCADE
 from django.db import models
-from django.forms import BooleanField
 from users.models import Profile
 
 

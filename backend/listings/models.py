@@ -1,6 +1,4 @@
-from tkinter import CASCADE
 from django.db import models
-from django.forms import BooleanField
 from users.models import Profile
 
 
@@ -32,3 +30,5 @@ class Listing(models.Model):
     date = models.DateField(auto_now=True)
     type = models.CharField(max_length=1, choices=Type.choices)
     complete = models.BooleanField(default=False)
+    # maybe add a max value
+    price = models.PositiveBigIntegerField()

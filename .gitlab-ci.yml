@@ -1,0 +1,25 @@
+.default_rules:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH)
+    - if: ($CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main")
+    - if: ($CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev")
+
+stages:
+  - test
+  
+test:
+  stage: test
+  image: python:3.10
+  script:
+    - cd backend
+    - pip install -r requirements.txt
+    - python manage.py makemigrations
+    - python manage.py migrate
+    - python manage.py test
+
+test:
+  stage: test
+  image: node:latest
+  script:
+    - cd frontend
+

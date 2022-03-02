@@ -1,11 +1,8 @@
-import data from '../data.json';
 import Listing from './Listing';
 import Popup from '../Popup/Popup';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CreateListing from './CreateListing';
 import './ListingView.css'
-
-
 
 
 const ListingView = () => {
@@ -15,6 +12,24 @@ const ListingView = () => {
   const togglePopup = () => {
     setIsOpen(!isOpen);
   }
+
+  const [listings,setListings] = useState([])
+
+  useEffect(()=>{
+    fetch('http://127.0.0.1:8000/api/listings/', {
+      'method':'GET',
+      headers:{
+        'Content-type':'application/json',
+        // 'X-CSRFToken':'SCazQ7huOf4Rvk2YoFB1WQ2blyg0sbYGIUffnz0p4hrv9MDV54ACiMwOnAbZ82MU'
+
+      }
+    })
+    .then(resp=>resp.json())
+    .then(resp=>setListings(resp))
+    .catch(error=>console.log(error))
+  },[])
+
+  console.log(listings)
 
   
   return (
@@ -43,9 +58,10 @@ const ListingView = () => {
           <label for="festival">Festival</label> 
       </div>
 
-        {data.map((innlegg, index)=>(
-            <Listing key={index} header={innlegg.event} description={innlegg.description} publisher={innlegg.publisher}></Listing>
-        ))}
+      <div className='listingView'>
+          {listings.map((listing, index)=>(
+              <Listing key={index} header={listing.title} description={listing.description} publisher={listing.owner} type={listing.type}></Listing>
+          ))}
 
 
         {isOpen && <Popup
@@ -61,6 +77,7 @@ const ListingView = () => {
           value="Klikk her for å legge ut innlegg"
           onClick={togglePopup}
         />
+      </div>
     </div>
   )
 }

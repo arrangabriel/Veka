@@ -1,35 +1,57 @@
 from .serializers import ListingReadSerializer, ListingWriteSerializer
 from .models import Listing, Profile
+from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 
-@api_view(['GET', 'POST'])
-def listings(request):
+class MultiSerializerViewSet(viewsets.ModelViewSet):
+    serializers = {
+        'default': None,
+    }
+
+    def get_serializer_class(self):
+        return self.serializers.get(self.action,
+                                    self.serializers['default'])
+
+
+class ListingViewSet(MultiSerializerViewSet):
     """
-    Listing api, allows GET and POST. 
+    Complete listing view.
     """
-    # Gets all listings
-    # TODO - filtering, adding options to the request i.e. location
-    if request.method == 'GET':
-        data = Listing.objects.all()
-        serializer = ListingReadSerializer(
-            data, context={'request': request}, many=True)
-        return Response(serializer.data)
+    serializers = {
+        'list': ListingReadSerializer,
+        'create': ListingWriteSerializer,
+        'retrieve': ListingReadSerializer,
+        'default': ListingReadSerializer,
+        'option': ListingWriteSerializer
+    }
 
-    # Create a listing
-    elif request.method == 'POST':
-        # Do not allow creation if user is not logged in
-        if not request.user.is_authenticated:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-        serializer = ListingWriteSerializer(data=request.data)
-        if serializer.is_valid():
-            data = serializer.validated_data
-            # Set owner field to be profile of session user
-            data["owner"] = Profile.objects.get(user=request.user.id)
-            Listing.objects.create(**serializer.validated_data).save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    # Use to set permissions for operations
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list' or self.action == 'option':
+            permission_classes = [AllowAny]
+        elif self.action == 'create':
+            permission_classes = [IsAuthenticated]
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
+
+    model = Listing
+    context_object_name = 'listings'
+    queryset = Listing.objects.all()
+
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # user id should always be valid, as create is only allowed when authenticated
+        serializer.validated_data['owner'] = Profile.objects.get(
+            user=request.user.id)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+

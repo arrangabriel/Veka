@@ -2,7 +2,7 @@ import React from 'react'
 import './Listing.css';
 import fest from './img/fest.jpg'
 
-const Listing = ({header,date,description,img,publisher}) => {
+const Listing = ({header,date,description,img,publisher,type}) => {
   return (
   //   <div className='listing'>
   //     <h5>{header}</h5>
@@ -35,7 +35,15 @@ const Listing = ({header,date,description,img,publisher}) => {
                     <div className="card-body">
                         <h5 className="card-title">{header}</h5>
                         <p className="card-text">{description}</p>
-                        <a href="/#" className="btn btn-primary">{publisher}</a>
+                        <p className='card-text' style={{color:'green'}}>{type==='b' ? 'Til salgs' : 'Ønskes kjøpt'}</p>
+                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <a href="/#" className="btn btn-primary">Besøk bruker</a>
+                            </div>
+                            <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                <a href="/#" className="btn btn-primary">Meld interesse</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

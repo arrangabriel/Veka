@@ -33,7 +33,7 @@ const ListingView = () => {
 
   
   return (
-    <div>
+    <div className='listingPage'>
       <div className='filterbox'>
           <h6>Velg kategori</h6>
           <input type="checkbox" id="tilsalg" name="tilsalg"></input>
@@ -62,22 +62,15 @@ const ListingView = () => {
           {listings.map((listing, index)=>(
               <Listing key={index} header={listing.title} description={listing.description} publisher={listing.owner} type={listing.type}></Listing>
           ))}
-
-
-        {isOpen && <Popup
+      </div>
+      {isOpen && <Popup
           content={<>
             <CreateListing></CreateListing>
           </>}
           handleClose={togglePopup}
         />}
 
-
-        <input
-          type="button"
-          value="Klikk her for å legge ut innlegg"
-          onClick={togglePopup}
-        />
-      </div>
+        <button type="button" class="addListing btn btn-primary" onClick={togglePopup}>Nytt innlegg</button>
     </div>
   )
 }

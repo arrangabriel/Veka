@@ -36,15 +36,15 @@ function App() {
 
       
 
-          <Routes>
-            <Route exact path='/' element={<ListingView/>} />
-            <Route path="/sign-in" element={<Login/>} />
-            <Route path="/sign-up" element={<SignUp/>} />
-            <Route path="/sign-up#" element={<Login/>} />
-            <Route path="/add-post" element={<CreateListing/>} />
-            <Route path="/my-user" element={Login} />
+      <Routes>
+        <Route exact path='/' element={<ListingView/>} />
+        <Route path="/sign-in" element={<Login/>} />
+        <Route path="/sign-up" element={<SignUp/>} />
+        <Route path="/sign-up#" element={<Login/>} />
+        <Route path="/add-post" element={<CreateListing/>} />
+        <Route path="/my-user" element={Login} />
 
-          </Routes>
+      </Routes>
           
     </div>
     </Router>

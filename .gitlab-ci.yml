@@ -6,15 +6,17 @@
 
 stages:
   - test
-  
+
 test:
   stage: test
   image: python:3.10
   script:
     - cd backend
-    - pip install -r requirements.txt
+    - pip install pipenv
+    - pipenv install
     - python manage.py makemigrations
     - python manage.py migrate
+    - pipenv shell
     - python manage.py test
 
 test:
@@ -22,4 +24,6 @@ test:
   image: node:latest
   script:
     - cd frontend
+    #- npm install
+    - npm test -a
 

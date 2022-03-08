@@ -8,7 +8,7 @@ describe("Login Form", () => {
     expect(
       screen.getByRole("heading", { name: /Logg inn/i })
     ).toBeInTheDocument();
-    expect(screen.getByText(/e-postadresse/i)).toBeInTheDocument();
+    expect(screen.getByText(/brukernavn/i)).toBeInTheDocument();
     expect(screen.getAllByText(/passord/i)[0]).toBeInTheDocument();
     expect(screen.getByText(/husk meg/i)).toBeInTheDocument();
     expect(screen.getByText(/glemt/i)).toBeInTheDocument();

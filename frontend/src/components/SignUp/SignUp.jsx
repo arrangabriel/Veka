@@ -6,13 +6,8 @@ const SignUp = () => {
             <h3>Registrer bruker</h3>
 
             <div className="form-group">
-                <label>Fornavn</label>
-                <input type="text" className="form-control" placeholder="Fornavn" />
-            </div>
-
-            <div className="form-group">
-                <label>Etternavn</label>
-                <input type="text" className="form-control" placeholder="Etternavn" />
+                <label>Brukernavn</label>
+                <input type="text" className="form-control" placeholder="Brukernavn" />
             </div>
 
             <div className="form-group">

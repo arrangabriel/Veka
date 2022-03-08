@@ -6,9 +6,44 @@ import CreateListing from './components/Listing/CreateListing';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {useState, useEffect} from 'react';
 import React from 'react';
+import {useCookies} from 'react-cookie';
+
 
 function App() {
+
+  const [token, setToken] = useCookies(['mytoken'])
+
+  useEffect(()=>{
+    fetch('http://127.0.0.1:8000/api/login/', {
+      'method':'POST',
+      headers:{
+        'Content-type':'application/json',
+        // 'X-CSRFToken':'SCazQ7huOf4Rvk2YoFB1WQ2blyg0sbYGIUffnz0p4hrv9MDV54ACiMwOnAbZ82MU'
+      },
+      body: JSON.stringify({ username: 'admin', password: 'admin'})
+    })
+    .then(resp=>resp.json())
+    .then(resp => setToken('mytoken',resp.token))
+    .catch(error=>console.log(error))
+  },[])
+  console.log(token)
+
+  useEffect(()=>{
+    fetch('http://127.0.0.1:8000/api/listings/', {
+      'method':'POST',
+      headers:{
+        'Content-type':'application/json',
+        'Authorization':`Token ${token['mytoken']}`
+      },
+      body: JSON.stringify({ title: 'Sander hoste', description: 'aent nivå av syra', location:'oslo', choice:'b', price:'500'})
+    })
+    .then(resp=>resp.json())
+    .then(resp=>console.log(resp))
+  },[])
+
+
 
   return (
     <Router>

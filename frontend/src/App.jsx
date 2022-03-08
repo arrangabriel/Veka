@@ -1,21 +1,15 @@
-import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import ListingView from './components/Listing/ListingView'
-import Popup from './components/Popup/Popup';
-
+import CreateListing from './components/Listing/CreateListing';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CreateListing from './components/Listing/CreateListing';
+import React from 'react';
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
- 
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
-  }
+
   return (
     <Router>
     <div className="App">
@@ -41,29 +35,19 @@ function App() {
         </div>
       </nav>
 
-      {isOpen && <Popup
-      content={<>
-        <CreateListing></CreateListing>
-      </>}
-      handleClose={togglePopup}
-      />}
+      
 
-          <Routes>
-            <Route exact path='/' element={<ListingView/>} />
-            <Route path="/sign-in" element={<Login/>} />
-            <Route path="/sign-up" element={<SignUp/>} />
-            <Route path="/sign-up#" element={<Login/>} />
-            <Route path="/add-post" element={<CreateListing/>} />
-            <Route path="/my-user" element={Login} />
+      <Routes>
+        <Route exact path='/' element={<ListingView/>} />
+        <Route path="/sign-in" element={<Login/>} />
+        <Route path="/sign-up" element={<SignUp/>} />
+        <Route path="/sign-up#" element={<Login/>} />
+        <Route path="/add-post" element={<CreateListing/>} />
+        <Route path="/my-user" element={Login} />
 
-          </Routes>
+      </Routes>
           
     </div>
-    <input
-      type="button"
-      value="Klikk her for å legge ut innlegg"
-      onClick={togglePopup}
-    />
     </Router>
   );
 }

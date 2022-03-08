@@ -1,12 +1,15 @@
 import React from "react";
-
+import {Link, Router} from "react-router-dom";
 const LoginForm = () => {
-  return ( <form  action="/">
+
+  return (
+  <div>
+  <form>
     <h3>Logg inn</h3>
 
     <div className="form-group">
-        <label>E-postadresse</label>
-        <input type="email" className="form-control" placeholder="Skriv E-postadresse" required="required" maxLength="40"/>
+        <label>Brukernavn</label>
+        <input type="username" className="form-control" placeholder="Skriv brukernavn" />
     </div>
 
     <div className="form-group">
@@ -25,7 +28,10 @@ const LoginForm = () => {
     <p className="forgot-password text-right">
         Glemt <a href="#">passord?</a>
     </p>
-</form>);
+    
+</form>
+    <a href="/sign-up" className="btn btn-secondary"> Registrer bruker</a>
+</div>);
 }
 
 export default LoginForm

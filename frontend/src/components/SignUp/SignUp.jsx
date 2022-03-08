@@ -6,6 +6,7 @@ const SignUp = () => {
             <h3>Registrer bruker</h3>
 
             <div className="form-group">
+<<<<<<< HEAD
                 <label>Fornavn</label>
                 <input type="text" className="form-control" placeholder="Fornavn" required="required" maxLength="40"/>
             </div>
@@ -13,6 +14,10 @@ const SignUp = () => {
             <div className="form-group">
                 <label>Etternavn</label>
                 <input type="text" className="form-control" placeholder="Etternavn" required="required" maxLength="40"/>
+=======
+                <label>Brukernavn</label>
+                <input type="text" className="form-control" placeholder="Brukernavn" />
+>>>>>>> origin/dev
             </div>
 
             <div className="form-group">

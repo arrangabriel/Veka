@@ -21,11 +21,11 @@ class ListingViewSet(MultiSerializerViewSet):
     Complete listing view.
     """
     serializers = {
-        'list': ListingReadSerializer,
         'create': ListingWriteSerializer,
+        'list': ListingReadSerializer,
         'retrieve': ListingReadSerializer,
         'default': ListingReadSerializer,
-        'option': ListingWriteSerializer
+        'metadata': ListingWriteSerializer
     }
 
     # Use to set permissions for operations
@@ -33,7 +33,7 @@ class ListingViewSet(MultiSerializerViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-        if self.action == 'list' or self.action == 'option':
+        if self.action == 'list' or self.action == 'metadata':
             permission_classes = [AllowAny]
         elif self.action == 'create':
             permission_classes = [IsAuthenticated]

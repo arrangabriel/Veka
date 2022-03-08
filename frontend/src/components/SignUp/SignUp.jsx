@@ -2,7 +2,7 @@ import React from "react";
 
 const SignUp = () => {
     return (
-        <form>
+        <form action="/">
             <h3>Registrer bruker</h3>
 
             <div className="form-group">
@@ -12,12 +12,12 @@ const SignUp = () => {
 
             <div className="form-group">
                 <label>E-postadresse</label>
-                <input type="email" className="form-control" placeholder="Skriv E-post" />
+                <input type="email" className="form-control" placeholder="Skriv E-post" required="required" maxLength="40"/>
             </div>
 
             <div className="form-group">
                 <label>Passord</label>
-                <input type="password" className="form-control" placeholder="Skriv passord" />
+                <input type="password" className="form-control" placeholder="Skriv passord" required="required" maxLength="40"/>
             </div>
 
             <button type="submit" className="btn btn-primary btn-block">Registrer meg</button>

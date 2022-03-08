@@ -22,6 +22,8 @@ class MultiSerializerViewSet(viewsets.ModelViewSet):
 
 class ProfilesViewSet(MultiSerializerViewSet):
 
+    queryset = Profile.objects.all()
+
     serializers = {
         'create': UserSerializer,
         'list': ProfileSerializer,
@@ -39,8 +41,6 @@ class ProfilesViewSet(MultiSerializerViewSet):
         else:
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
-
-    queryset = Profile.objects.all()
 
     def create(self, request):
         username = request.data.get('username')
@@ -87,7 +87,10 @@ class LogoutViewSet(viewsets.ViewSet):
         return Response(status=status.HTTP_200_OK)
 
 
-class EditViewSet(viewsets.ViewSet):
+class EditViewSet(viewsets.ModelViewSet):
+
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
     def get_permissions(self):
         """
@@ -101,17 +104,21 @@ class EditViewSet(viewsets.ViewSet):
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
-    serializer = ProfileSerializer
-
     def create(self, request):
-        bio = request.POST['bio']
-        location = request.POST['location']
+        bio = request.data.get('bio')
+        location = request.data.get('location')
+        first_name = request.data.get('first_name')
+        last_name = request.data.get('last_name')
         if request.user.is_authenticated:
             profile = Profile.objects.get(user=request.user.id)
             if (bio):
                 profile.bio = bio
             if (location):
                 profile.location = location
+            if (first_name):
+                profile.first_name = first_name
+            if (last_name):
+                profile.last_name = last_name
             try:
                 profile.full_clean()
                 profile.save()

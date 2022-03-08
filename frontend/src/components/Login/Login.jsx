@@ -14,7 +14,7 @@ const LoginForm = () => {
 
     <div className="form-group">
         <label>Passord</label>
-        <input type="password" className="form-control" placeholder="Skriv passord" />
+        <input type="password" className="form-control" placeholder="Skriv passord" required="required" maxLength="40"/>
     </div>
 
     <div className="form-group">

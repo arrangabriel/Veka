@@ -10,7 +10,25 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 
-class ProfilesViewSet(viewsets.ModelViewSet):
+class MultiSerializerViewSet(viewsets.ModelViewSet):
+    serializers = {
+        'default': None,
+    }
+
+    def get_serializer_class(self):
+        return self.serializers.get(self.action,
+                                    self.serializers['default'])
+
+
+class ProfilesViewSet(MultiSerializerViewSet):
+
+    serializers = {
+        'create': UserSerializer,
+        'list': ProfileSerializer,
+        'retrieve': ProfileSerializer,
+        'default': UserSerializer,
+        'metadata': ProfileSerializer
+    }
 
     def get_permissions(self):
         """
@@ -22,8 +40,7 @@ class ProfilesViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    queryset = Profile.objects.all()
 
     def create(self, request):
         username = request.data.get('username')
@@ -43,7 +60,7 @@ class LoginViewSet(viewsets.ModelViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-        if self.action == 'list' or self.action == 'create':
+        if self.action == 'create':
             permission_classes = [AllowAny]
         else:
             permission_classes = [IsAdminUser]
@@ -61,9 +78,6 @@ class LoginViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-    def list(self, request):
-        return Response(status=status.HTTP_200_OK)
 
 
 class LogoutViewSet(viewsets.ViewSet):

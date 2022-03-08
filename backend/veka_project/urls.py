@@ -1,4 +1,4 @@
-"""backend URL Configuration
+"""veka_project URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -15,8 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from users import views
+from listings.views import ListingViewSet
+from users.views import ProfilesViewSet, LoginViewSet, LogoutViewSet, EditViewSet
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'profiles', ProfilesViewSet, basename="profiles")
+router.register(r'login', LoginViewSet, basename="login")
+router.register(r'logout', LogoutViewSet, basename="logout")
+router.register(r'edit', EditViewSet, basename="edit")
+router.register(r'listings', ListingViewSet, basename='listing')
+
+urlpatterns = router.urls
 
 urlpatterns = [
-    path('veka/', include('veka.urls')),
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls))
 ]

@@ -47,7 +47,7 @@ class ProfilesViewSet(MultiSerializerViewSet):
         password = request.data.get('password')
         email = request.data.get('email')
         try:
-            user = User.objects.create_user(
+            User.objects.create_user(
                 username=username, email=email, password=password).save()
             return Response(status=status.HTTP_201_CREATED)
         except IntegrityError as e:

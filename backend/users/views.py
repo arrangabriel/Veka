@@ -9,27 +9,29 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
+
 class ProfilesViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-        if self.action == 'list' or self.action == 'create':
+        if self.action == 'list' or self.action == 'create' or self.action == 'metadata':
             permission_classes = [AllowAny]
         else:
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
     def create(self, request):
-        username = request.POST['user.username']
-        password = request.POST['user.password']
-        email = request.POST['user.email']
+        username = request.data.get('username')
+        password = request.data.get('password')
+        email = request.data.get('email')
         try:
-            user = User.objects.create_user(username=username, email=email, password=password).save()
+            user = User.objects.create_user(
+                username=username, email=email, password=password).save()
             return Response(status=status.HTTP_201_CREATED)
         except IntegrityError as e:
             return Response(e.args, status=status.HTTP_400_BAD_REQUEST)
@@ -51,8 +53,8 @@ class LoginViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
 
     def create(self, request):
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.data.get('username')
+        password = request.data.get('password')
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
@@ -96,10 +98,10 @@ class EditViewSet(viewsets.ViewSet):
                 profile.bio = bio
             if (location):
                 profile.location = location
-            try: 
+            try:
                 profile.full_clean()
                 profile.save()
                 return Response(status=status.HTTP_200_OK)
             except ValidationError as e:
-                #TODO: Make custom error message
+                # TODO: Make custom error message
                 return Response(status=status.HTTP_400_BAD_REQUEST)

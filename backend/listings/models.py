@@ -24,7 +24,7 @@ class Listing(models.Model):
 
     class EventType(models.TextChoices):
         """
-        Valid lisevent types.
+        Valid event types.
         """
         KONSERT = 'konsert'
         TEATER = 'teater'

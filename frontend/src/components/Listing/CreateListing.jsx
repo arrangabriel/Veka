@@ -61,13 +61,13 @@ const UserPost = () => {
             </div>
             <div className="form-check">
                 <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"></input>
-                <label className="form-check-label" for="flexRadioDefault2">
+                <label className="form-check-label" htmlFor="flexRadioDefault2">
                     Til salg
                 </label>
                 </div>
                 <div className="form-check">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked></input>
-                <label className="form-check-label" for="flexRadioDefault2">
+                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" defaultChecked></input>
+                <label className="form-check-label" htmlFor="flexRadioDefault2">
                     Ønskes kjøpt
                 </label>
             </div>

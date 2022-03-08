@@ -37,25 +37,25 @@ const ListingView = () => {
       <div className='filterbox'>
           <h6>Velg kategori</h6>
           <input type="checkbox" id="tilsalg" name="tilsalg"></input>
-          <label for="tilsalg">Til salg</label>
+          <label htmlFor="tilsalg">Til salg</label>
           <input type="checkbox" id="onskeskjopt" name="onskeskjopt"></input>
-          <label for="onskeskjopt">Ønskes kjøpt</label>
+          <label htmlFor="onskeskjopt">Ønskes kjøpt</label>
 
           <h6>Sted</h6>
           <input type="checkbox" id="bergen" name="bergen"></input>
-          <label for="bergen">Bergen</label>
+          <label htmlFor="bergen">Bergen</label>
           <input type="checkbox" id="oslo" name="oslo"></input>
-          <label for="oslo">Oslo</label>
+          <label htmlFor="oslo">Oslo</label>
           <input type="checkbox" id="stavanger" name="stavanger"></input>
-          <label for="stavanger">Stavanger</label>
+          <label htmlFor="stavanger">Stavanger</label>
 
           <h6>Arrangement</h6>
           <input type="checkbox" id="konsert" name="konsert"></input>
-          <label for="konsert">Konsert</label>
+          <label htmlFor="konsert">Konsert</label>
           <input type="checkbox" id="teater" name="teater"></input>
-          <label for="teater">Teater</label>
+          <label htmlFor="teater">Teater</label>
           <input type="checkbox" id="stavanger" name="festival"></input>
-          <label for="festival">Festival</label> 
+          <label htmlFor="festival">Festival</label> 
       </div>
 
       <div className='listingView'>
@@ -70,7 +70,7 @@ const ListingView = () => {
           handleClose={togglePopup}
         />}
 
-        <button type="button" class="addListing btn btn-primary" onClick={togglePopup}>Nytt innlegg</button>
+        <button type="button" className="addListing btn btn-primary" onClick={togglePopup}>Nytt innlegg</button>
     </div>
   )
 }

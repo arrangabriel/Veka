@@ -9,5 +9,5 @@ test('renders learn react link', () => {
   })).toBeInTheDocument();
 
   expect(screen.getByText('mega fest')).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: /sander/i })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /Besøk bruker/i })).toBeInTheDocument();
 });

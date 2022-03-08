@@ -10,8 +10,7 @@ describe("Signup Form", () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/e-postadresse/i)).toBeInTheDocument();
     expect(screen.getAllByText(/passord/i)[0]).toBeInTheDocument();
-    expect(screen.getByText(/fornavn/i)).toBeInTheDocument();
-    expect(screen.getByText(/etternavn/i)).toBeInTheDocument();
+    expect(screen.getByText(/brukernavn/i)).toBeInTheDocument();
     expect(screen.getByRole('link', {name: /logg inn/i})).toBeInTheDocument();
     expect(screen.getByRole('button', {name: /registrer meg/i})).toBeInTheDocument();
   });

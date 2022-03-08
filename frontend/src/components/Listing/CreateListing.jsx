@@ -59,7 +59,18 @@ const UserPost = () => {
                 <label htmlFor="exampleFormControlTextarea1">Mer om arrangementet</label>
                 <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" maxLength="150"></textarea>
             </div>
-
+            <div className="form-check">
+                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"></input>
+                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                    Til salg
+                </label>
+                </div>
+                <div className="form-check">
+                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" defaultChecked></input>
+                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                    Ønskes kjøpt
+                </label>
+            </div>
             <button type="submit" className="btn btn-primary btn-block">Publiser</button>
         </form>
   )

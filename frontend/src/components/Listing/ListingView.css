@@ -1,0 +1,23 @@
+.filterbox{
+    border: 1px solid black;
+    display: inline-block;
+    height: max-content;
+    padding: 1rem;
+}
+
+.listingPage{
+    margin: 2rem 2rem 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    column-gap: 2rem;
+}
+
+.addListing{
+    height: max-content;
+    width: fit-content;
+    justify-self: center;
+}
+
+.listingButtonsDiv{
+    float: right;
+}

@@ -14,9 +14,10 @@ test:
     - cd backend
     - pip install pipenv
     - pipenv install
+    - pipenv shell
+    - cd backend
     - python manage.py makemigrations
     - python manage.py migrate
-    - pipenv shell
     - python manage.py test
 
 test:
@@ -24,6 +25,7 @@ test:
   image: node:latest
   script:
     - cd frontend
-    #- npm install
+    - npm install
     - npm test -a
+    - a
 

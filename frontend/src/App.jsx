@@ -7,6 +7,7 @@ import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
+import ProfilePage from './components/Profile/ProfilePage';
 
 function App() {
 
@@ -43,7 +44,7 @@ function App() {
         <Route path="/sign-up" element={<SignUp/>} />
         <Route path="/sign-up#" element={<Login/>} />
         <Route path="/add-post" element={<CreateListing/>} />
-        <Route path="/my-user" element={Login} />
+        <Route path="/my-user" element={<ProfilePage/>} />
 
       </Routes>
           

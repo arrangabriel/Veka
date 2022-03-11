@@ -17,15 +17,17 @@ function App() {
 
   useEffect(()=>{
     fetch('http://127.0.0.1:8000/api/login/', {
-      'method':'POST',
+      method:'POST',
       headers:{
+        Accept: 'application/json',
         'Content-type':'application/json',
-        // 'X-CSRFToken':'SCazQ7huOf4Rvk2YoFB1WQ2blyg0sbYGIUffnz0p4hrv9MDV54ACiMwOnAbZ82MU'
       },
-      body: JSON.stringify({ username: 'admin', password: 'admin'})
+      credentials:'include',
+      body: JSON.stringify({ username: 'admin', password: 'admin'}) 
     })
     .then(resp=>resp.json())
-    .then(resp => setToken('mytoken',resp.token))
+    .then(resp=>console.log(resp))
+    .then(resp => setToken('mytoken',resp))
     .catch(error=>console.log(error))
   },[])
   console.log(token)
@@ -33,14 +35,15 @@ function App() {
   useEffect(()=>{
     fetch('http://127.0.0.1:8000/api/listings/', {
       'method':'POST',
+      credentials:'include',
       headers:{
         'Content-type':'application/json',
-        'Authorization':`Token ${token['mytoken']}`
+        'Cookie': "csrftoken="+token.csrftoken+";"
       },
+      
       body: JSON.stringify({ title: 'Sander hoste', description: 'aent nivå av syra', location:'oslo', choice:'b', price:'500'})
     })
     .then(resp=>resp.json())
-    .then(resp=>console.log(resp))
   },[])
 
 

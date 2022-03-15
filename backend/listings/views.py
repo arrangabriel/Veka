@@ -1,9 +1,13 @@
+from os import stat
+from urllib import response
+from wsgiref import headers
 from .serializers import ListingReadSerializer, ListingWriteSerializer
 from .models import Listing, Profile
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.decorators import action
 # from rest_framework.authentication import TokenAuthentication
 
 
@@ -56,3 +60,26 @@ class ListingViewSet(MultiSerializerViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    # TODO figure out IsAdminOrIsSelf: https://www.django-rest-framework.org/api-guide/routers/
+    @action(methods=['get'], detail=True, permission_classes=[IsAuthenticated])
+    def show_interest(self, request, pk=None):
+        listing = self.queryset.get(id=pk)
+        if listing.owner.user.id == request.user.id:
+            return Response(data='Cannot show interest in ones own listing!', status=status.HTTP_403_FORBIDDEN)
+        listing.interested_users.add(Profile.objects.get(
+            user=request.user.id)
+        )
+        return Response(data='Interest shown succesfully!', status=status.HTTP_200_OK)
+
+    @action(methods=['get'], detail=True, permission_classes=[IsAuthenticated])
+    def interested(self, request, pk=None):
+        listing = self.queryset.get(id=pk)
+        # uses username, but they are unique, so that's fine
+        if listing.owner.user != request.user:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        interested = listing.interested_users.all()
+        interested_dict = {
+            key.id: key.user.username for key in interested
+        }
+        return Response(data=interested_dict, status=status.HTTP_200_OK)

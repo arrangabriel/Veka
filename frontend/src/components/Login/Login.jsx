@@ -1,20 +1,38 @@
 import React from "react";
 import {Link, Router} from "react-router-dom";
+import {useState, useEffect} from 'react';
+import APIservice from "../../APIservice";
+import {useCookies} from 'react-cookie';
+
+
+
+
 const LoginForm = () => {
+    const [password, setPassword] = useState('');
+    const [username,setUsername]=useState('');
+    const [token, setToken]=useCookies(['mytoken']);
+
+
+    const bug=()=>{
+        APIservice.Login({username,password})
+        .then(resp=>resp.json())
+        .then(resp=>setToken('mytoken',resp.token))
+        .then(error=>console.log(error))
+    }
+
 
   return (
   <div>
-  <form>
     <h3>Logg inn</h3>
 
     <div className="form-group">
         <label>Brukernavn</label>
-        <input type="username" className="form-control" placeholder="Skriv brukernavn" />
+        <input value={username} onInput={e => setUsername(e.target.value)} type="username" className="form-control" placeholder="Skriv brukernavn" required/>
     </div>
 
     <div className="form-group">
         <label>Passord</label>
-        <input type="password" className="form-control" placeholder="Skriv passord" required="required" maxLength="40"/>
+        <input value={password} onInput={e => setPassword(e.target.value)} type="password" className="form-control" placeholder="Skriv passord" required maxLength="40"/>
     </div>
 
     <div className="form-group">
@@ -24,12 +42,10 @@ const LoginForm = () => {
         </div>
     </div>
 
-    <button type="submit" className="btn btn-primary btn-block">Logg inn</button>
+    <button className="btn btn-primary btn-block" onClick={bug}>Logg inn</button>
     <p className="forgot-password text-right">
         Glemt <a href="#">passord?</a>
     </p>
-    
-</form>
     <a href="/sign-up" className="btn btn-secondary"> Registrer bruker</a>
 </div>);
 }

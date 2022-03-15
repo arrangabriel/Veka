@@ -14,7 +14,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('user', 'bio', 'location')
+        fields = ('user', 'first_name', 'last_name', 'bio', 'location')
 
 
 class LoginSerializer(serializers.ModelSerializer):

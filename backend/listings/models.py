@@ -36,8 +36,8 @@ class Listing(models.Model):
     description = models.CharField(max_length=500)
     location = models.CharField(max_length=9, choices=Locations.choices)
     date = models.DateField(auto_now=True)
-    listingType = models.CharField(max_length=1, choices=listingType.choices)
-    eventType = models.CharField(max_length=2, choices=eventType.choices)
+    listing_type = models.CharField(max_length=1, choices=listingType.choices)
+    event_type = models.CharField(max_length=2, choices=eventType.choices)
     complete = models.BooleanField(default=False)
     # maybe add a max value
     price = models.PositiveBigIntegerField()

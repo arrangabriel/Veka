@@ -51,10 +51,12 @@ class ListingViewSet(MultiSerializerViewSet):
         queryset = Listing.objects.all()
         params = self.request.query_params
 
-        buy_sell = params.get('buysell')
+        listing_type = params.get('listing_type')
 
-        if buy_sell is not None:
-            queryset = queryset.filter()
+        if listing_type is not None:
+            queryset = queryset.filter(listing_type=listing_type)
+
+        return queryset
 
         # return super().get_queryset()
 

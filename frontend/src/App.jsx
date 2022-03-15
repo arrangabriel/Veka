@@ -26,7 +26,7 @@ function App() {
         'Authorization': 'Token ' + token.mytoken
       },
 
-      body: JSON.stringify({ title: 'Sander hoste', description: 'aent nivå av syra', location: 'oslo', listing_type: 'b', price: '500', event_type: 'konsert' })
+      body: JSON.stringify({ title: 'Sander hoste', description: 'aent nivå av syra', location: 'oslo', listing_type: 'b', price: '500', event_type: 'c' })
     })
       .then(resp => resp.json())
   }, [])

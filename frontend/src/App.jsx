@@ -17,6 +17,7 @@ function App() {
 
 
   useEffect(() => {
+    console.log(token.mytoken)
     fetch('http://127.0.0.1:8000/api/listings/', {
       'method': 'POST',
       credentials: 'include',

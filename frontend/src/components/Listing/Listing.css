@@ -1,0 +1,9 @@
+.listingButtonsDiv .container{
+    /* padding: 0; */
+    padding-top: var(--bs-gutter-x,.75rem);
+    padding-bottom: var(--bs-gutter-x,.75rem);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}

@@ -136,9 +136,9 @@ CORS_ORIGIN_WHITELIST = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-rest_framework = {
-    'default_authentication_classes': [
-        'rest_framework.authentication.sessionauthentication',
-        'rest_framework.authentication.tokenauthentication',
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ]
 }

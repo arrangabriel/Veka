@@ -8,27 +8,27 @@ import SignUp from './components/SignUp/SignUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
 import React from 'react';
-import { useCookies } from 'react-cookie';
+import {useCookies} from 'react-cookie'
 
 
 function App() {
 
   const [token, setToken] = useCookies(['mytoken'])
 
-
-  useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/listings/', {
-      'method': 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': 'Token ' + token.mytoken
-      },
-
-      body: JSON.stringify({ title: 'Sander hoste', description: 'aent nivå av syra', location: 'oslo', listing_type: 'b', price: '500', event_type: 'konsert' })
-    })
-      .then(resp => resp.json())
-  }, [])
+  // console.log(token)
+  // useEffect(()=>{
+  //   fetch('http://127.0.0.1:8000/api/listings/', {
+  //     'method':'POST',
+  //     credentials:'include',
+  //     headers:{
+  //       'Content-type':'application/json',
+  //       'Authorization': 'Token '+token.mytoken
+  //     },
+      
+  //     body: JSON.stringify({ title: 'Lise ska ha fest', description: 'aent nivå av syra', location:'oslo', listing_type:'b', price:'500', event_type:'konsert'})
+  //   })
+  //   .then(resp=>resp.json())
+  // },[])
 
 
 

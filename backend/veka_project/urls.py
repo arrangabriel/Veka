@@ -19,6 +19,7 @@ from users import views
 from listings.views import ListingViewSet
 from users.views import ProfilesViewSet, LoginViewSet, LogoutViewSet, EditViewSet
 from rest_framework import routers
+from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
 router.register(r'profiles', ProfilesViewSet, basename="profiles")
@@ -31,5 +32,6 @@ urlpatterns = router.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
+    path('auth/', obtain_auth_token)
 ]

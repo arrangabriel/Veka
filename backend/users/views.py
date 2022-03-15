@@ -75,7 +75,7 @@ class LoginViewSet(viewsets.ModelViewSet):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return Response(status=status.HTTP_200_OK, data="heihfsdoifn")
+            return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 

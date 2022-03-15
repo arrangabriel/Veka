@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.authentication import TokenAuthentication
 
 
 class MultiSerializerViewSet(viewsets.ModelViewSet):
@@ -17,6 +18,7 @@ class MultiSerializerViewSet(viewsets.ModelViewSet):
 
 
 class ListingViewSet(MultiSerializerViewSet):
+    
     """
     Complete listing view.
     """
@@ -44,6 +46,7 @@ class ListingViewSet(MultiSerializerViewSet):
     model = Listing
     context_object_name = 'listings'
     queryset = Listing.objects.all()
+    authentication_classes=(TokenAuthentication,)
 
     def create(self, request):
         serializer = self.get_serializer(data=request.data)

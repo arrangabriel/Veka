@@ -8,29 +8,12 @@ import SignUp from './components/SignUp/SignUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState, useEffect} from 'react';
 import React from 'react';
-import {useCookies} from 'react-cookie';
 
 
 function App() {
 
   const [token, setToken] = useCookies(['mytoken'])
 
-  useEffect(()=>{
-    fetch('http://127.0.0.1:8000/api/login/', {
-      method:'POST',
-      headers:{
-        Accept: 'application/json',
-        'Content-type':'application/json',
-      },
-      credentials:'include',
-      body: JSON.stringify({ username: 'admin', password: 'admin'}) 
-    })
-    .then(resp=>resp.json())
-    .then(resp=>console.log(resp))
-    .then(resp => setToken('mytoken',resp))
-    .catch(error=>console.log(error))
-  },[])
-  console.log(token)
 
   useEffect(()=>{
     fetch('http://127.0.0.1:8000/api/listings/', {
@@ -38,10 +21,10 @@ function App() {
       credentials:'include',
       headers:{
         'Content-type':'application/json',
-        'Cookie': "csrftoken="+token.csrftoken+";"
+        'Authorization': 'Token '+token.mytoken
       },
       
-      body: JSON.stringify({ title: 'Sander hoste', description: 'aent nivå av syra', location:'oslo', choice:'b', price:'500'})
+      body: JSON.stringify({ title: 'Sander hoste', description: 'aent nivå av syra', location:'oslo', listing_type:'b', price:'500', event_type:'konsert'})
     })
     .then(resp=>resp.json())
   },[])
@@ -82,7 +65,6 @@ function App() {
         <Route path="/sign-up#" element={<Login/>} />
         <Route path="/add-post" element={<CreateListing/>} />
         <Route path="/my-user" element={Login} />
-
       </Routes>
           
     </div>

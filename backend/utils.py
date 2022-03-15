@@ -1,4 +1,3 @@
-from curses.ascii import US
 from django.contrib.auth.models import User
 
 data = {
@@ -8,4 +7,4 @@ data = {
 
 
 def create_test_user():
-    User.objects.create_user(**data)
+    return User.objects.create_user(**data)

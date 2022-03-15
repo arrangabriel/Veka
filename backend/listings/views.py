@@ -46,6 +46,12 @@ class ListingViewSet(MultiSerializerViewSet):
     model = Listing
     context_object_name = 'listings'
     #queryset = Listing.objects.all()
+    valid_orderings = (
+        'date',
+        'price',
+        # Location is a bit silly
+        'location',
+    )
 
     def get_queryset(self):
         queryset = Listing.objects.all()
@@ -55,12 +61,22 @@ class ListingViewSet(MultiSerializerViewSet):
         # Possible options can be found in listings/models.py
         listing_type = params.get('listing_type')
         event_type = params.get('event_type')
+        location = params.get('location')
+        sort = params.get('sort')  # prefix value with - to sort descending
+
+        if sort in None or sort not in self.valid_orderings:
+            sort = 'date'
+
+        queryset = queryset.order_by(sort)
 
         if listing_type is not None:
             queryset = queryset.filter(listing_type=listing_type)
 
         if event_type is not None:
             queryset = queryset.filter(event_type=event_type)
+
+        if location is not None:
+            queryset = queryset.filter(location=location)
 
         return queryset
 

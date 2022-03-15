@@ -51,14 +51,18 @@ class ListingViewSet(MultiSerializerViewSet):
         queryset = Listing.objects.all()
         params = self.request.query_params
 
+        # The names of these parameters are mirrors of the database attributes
+        # Possible options can be found in listings/models.py
         listing_type = params.get('listing_type')
+        event_type = params.get('event_type')
 
         if listing_type is not None:
             queryset = queryset.filter(listing_type=listing_type)
 
-        return queryset
+        if event_type is not None:
+            queryset = queryset.filter(event_type=event_type)
 
-        # return super().get_queryset()
+        return queryset
 
     def create(self, request):
         serializer = self.get_serializer(data=request.data)

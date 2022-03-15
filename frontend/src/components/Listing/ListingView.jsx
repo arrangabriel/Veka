@@ -29,7 +29,6 @@ const ListingView = () => {
     .catch(error=>console.log(error))
   },[])
 
-  console.log(listings)
 
   
   return (

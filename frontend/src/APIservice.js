@@ -22,5 +22,4 @@ export default class APIservice{
               body: JSON.stringify(body)
             }))
     }
-
 }

@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'users',
     'listings',
     'rest_framework.authtoken'
-
 ]
 
 MIDDLEWARE = [
@@ -135,4 +134,11 @@ CORS_ORIGIN_WHITELIST = [
 
 ]
 
-CORS_ALLOW_CREDENTIALS=True
+CORS_ALLOW_CREDENTIALS = True
+
+rest_framework = {
+    'default_authentication_classes': [
+        'rest_framework.authentication.sessionauthentication',
+        'rest_framework.authentication.tokenauthentication',
+    ]
+}

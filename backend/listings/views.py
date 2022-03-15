@@ -51,7 +51,12 @@ class ListingViewSet(MultiSerializerViewSet):
         'price',
         # Location is a bit silly
         'location',
+        '-date',
+        '-price',
+        '-location',
     )
+
+    # finn.no/?param1=katt&param2=pus&sort=-date
 
     def get_queryset(self):
         queryset = Listing.objects.all()

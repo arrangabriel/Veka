@@ -43,7 +43,18 @@ class ListingViewSet(MultiSerializerViewSet):
 
     model = Listing
     context_object_name = 'listings'
-    queryset = Listing.objects.all()
+    #queryset = Listing.objects.all()
+
+    def get_queryset(self):
+        queryset = Listing.objects.all()
+        params = self.request.query_params
+
+        buy_sell = params.get('buysell')
+
+        if buy_sell is not None:
+            queryset = queryset.filter()
+
+        # return super().get_queryset()
 
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -54,4 +65,3 @@ class ListingViewSet(MultiSerializerViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-

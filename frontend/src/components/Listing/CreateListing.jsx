@@ -9,12 +9,12 @@ import "react-datepicker/dist/react-datepicker.css"
 const UserPost = () => {
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
-    const [eventType, setEventType] = useState({ value: '' });
+    const [eventType, setEventType] = useState('');
     const [startDate, setStartDate] = useState(new Date());
-    const [location, setLocation] = useState({ value: '' });
-    const [numTickets, setNumTickets] = useState({ value: '' });
+    const [location, setLocation] = useState('');
+    const [numTickets, setNumTickets] = useState('');
     const [description, setDescription] = useState('');
-    const [listingType, setListingType] = useState({ name: '' });
+    const [listingType, setListingType] = useState('');
 
     const [token, setToken] = useCookies(['mytoken'])
 
@@ -22,10 +22,10 @@ const UserPost = () => {
         let body = {
             title: title,
             description: description,
-            date: "2022-03-08",
-            location: 'bergen',
-            listing_type: 'b',
-            event_type: 'konsert',
+            date: startDate.toISOString().split('T')[0],
+            location: location,
+            listing_type: listingType,
+            event_type: eventType,
             price: parseInt(price)
         };
 
@@ -48,7 +48,7 @@ const UserPost = () => {
 
             <div className="form-group">
                 <label htmlFor="exampleFormControlSelect1">Arrangementtype</label>
-                <select defaultValue={""} onChange={e => setEventType({ value: e.target.value })} className="form-control" id="exampleFormControlSelect1" >
+                <select defaultValue="" onChange={e => setEventType(e.target.value)} className="form-control" id="exampleFormControlSelect1" >
                     <option value="" disabled="disabled">Velg...</option>
                     <option value="c">Konsert</option>
                     <option value="t">Teater</option>
@@ -61,7 +61,7 @@ const UserPost = () => {
 
             <div className="form-group">
                 <label htmlFor="exampleFormControlSelect1">Sted</label>
-                <select defaultValue={""} onChange={e => setLocation({ value: e.target.value })} className="form-control" id="LocationSelect">
+                <select defaultValue="" onChange={e => setLocation(e.target.value)} className="form-control" id="LocationSelect">
                     <option value="" disabled>Velg...</option>
                     <option value="oslo">Oslo</option>
                     <option value="bergen">Bergen</option>
@@ -71,7 +71,7 @@ const UserPost = () => {
 
             <div className="form-group">
                 <label htmlFor="exampleFormControlSelect1">Antall billetter</label>
-                <select defaultValue={""} onChange={e => setNumTickets({ value: e.target.value })} className="form-control" id="TicketNumberSelect">
+                <select defaultValue="" onChange={e => setNumTickets(e.target.value)} className="form-control" id="TicketNumberSelect">
                     <option value="" disabled>Velg...</option>
                     <option value="1">1</option>
                     <option value="2">2</option>

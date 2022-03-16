@@ -33,12 +33,14 @@ const ListingView = () => {
   
   return (
     <div className='listingPage'>
-      <div className='filterbox'>
+      <div className='filterbox container'>
           <h6>Velg kategori</h6>
           <input type="checkbox" id="tilsalg" name="tilsalg"></input>
           <label htmlFor="tilsalg">Til salg</label>
           <input type="checkbox" id="onskeskjopt" name="onskeskjopt"></input>
           <label htmlFor="onskeskjopt">Ønskes kjøpt</label>
+          <br/>
+          <br/>
 
           <h6>Sted</h6>
           <input type="checkbox" id="bergen" name="bergen"></input>
@@ -47,7 +49,8 @@ const ListingView = () => {
           <label htmlFor="oslo">Oslo</label>
           <input type="checkbox" id="stavanger" name="stavanger"></input>
           <label htmlFor="stavanger">Stavanger</label>
-
+          <br/>
+          <br/>
           <h6>Arrangement</h6>
           <input type="checkbox" id="konsert" name="konsert"></input>
           <label htmlFor="konsert">Konsert</label>

@@ -41,3 +41,5 @@ class Listing(models.Model):
     complete = models.BooleanField(default=False)
     # maybe add a max value
     price = models.PositiveBigIntegerField()
+    interested_users = models.ManyToManyField(
+        Profile, related_name='interested')

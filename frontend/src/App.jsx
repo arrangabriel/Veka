@@ -8,7 +8,8 @@ import SignUp from './components/SignUp/SignUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
 import React from 'react';
-import { useCookies } from 'react-cookie'
+import ProfilePage from './components/Profile/ProfilePage';
+import {useCookies} from 'react-cookie'
 
 
 function App() {
@@ -58,17 +59,17 @@ function App() {
         </nav>
 
 
+      <Routes>
+        <Route exact path='/' element={<ListingView/>} />
+        <Route path="/sign-in" element={<Login/>} />
+        <Route path="/sign-up" element={<SignUp/>} />
+        <Route path="/sign-up#" element={<Login/>} />
+        <Route path="/add-post" element={<CreateListing/>} />
+        <Route path="/my-user" element={<ProfilePage/>} />
 
-        <Routes>
-          <Route exact path='/' element={<ListingView />} />
-          <Route path="/sign-in" element={<Login />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/sign-up#" element={<Login />} />
-          <Route path="/add-post" element={<CreateListing />} />
-          <Route path="/my-user" element={Login} />
-        </Routes>
-
-      </div>
+      </Routes>
+          
+    </div>
     </Router>
   );
 }

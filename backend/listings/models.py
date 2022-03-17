@@ -15,20 +15,20 @@ class Listing(models.Model):
         STAVANGER = 'stavanger'
         BERGEN = 'bergen'
 
-    class ListingType(models.TextChoices):
+    class listingType(models.TextChoices):
         """
         Valid listing types.
         """
         BUY = 'b'
         SELL = 's'
 
-    class EventType(models.TextChoices):
+    class eventType(models.TextChoices):
         """
         Valid event types.
         """
-        KONSERT = 'konsert'
-        TEATER = 'teater'
-        FESTIVAL = 'festival'
+        THEATRE = 't'
+        CONCERT = 'c'
+        PARTY = 'p'
 
     owner = models.ForeignKey(
         Profile, on_delete=models.CASCADE, blank=False, null=False)
@@ -36,8 +36,8 @@ class Listing(models.Model):
     description = models.CharField(max_length=500)
     location = models.CharField(max_length=9, choices=Locations.choices)
     date = models.DateField(auto_now=True)
-    listing_type = models.CharField(max_length=1, choices=ListingType.choices)
-    event_type = models.CharField(max_length=10, choices=EventType.choices)
+    listing_type = models.CharField(max_length=1, choices=listingType.choices)
+    event_type = models.CharField(max_length=2, choices=eventType.choices)
     complete = models.BooleanField(default=False)
     # maybe add a max value
     price = models.PositiveBigIntegerField()

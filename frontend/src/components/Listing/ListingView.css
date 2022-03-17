@@ -1,9 +1,23 @@
 .filterbox{
-    border: 1px solid black;
     display: inline-block;
     height: max-content;
     padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    width: fit-content;
+    padding: 1rem 3rem;
 }
+
+.filterbox label{
+    margin-right: 0.5rem;
+    color: rgb(57, 57, 71);
+}
+
+.filterbox h6{
+    text-decoration: underline;
+    font-size: 0.8rem;
+}
+
+
 
 .listingPage{
     margin: 2rem 2rem 0 2rem;
@@ -16,8 +30,4 @@
     height: max-content;
     width: fit-content;
     justify-self: center;
-}
-
-.listingButtonsDiv{
-
 }

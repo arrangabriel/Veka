@@ -65,6 +65,7 @@ class ListingViewSet(MultiSerializerViewSet):
 
         # The names of these parameters are mirrors of the database attributes
         # Possible options can be found in listings/models.py
+        user = params.get('user')
         listing_type = params.getlist('listing_type')
         event_type = params.getlist('event_type')
         location = params.getlist('location')
@@ -77,6 +78,9 @@ class ListingViewSet(MultiSerializerViewSet):
             sort = 'date'
 
         queryset = queryset.order_by(sort)
+
+        if user is not None:
+            queryset = queryset.filter(owner__id=user)
 
         if listing_type:
             queryset = queryset.filter(listing_type__in=listing_type)

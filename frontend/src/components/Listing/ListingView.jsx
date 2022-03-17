@@ -1,11 +1,12 @@
 import Listing from './Listing';
 import Popup from '../Popup/Popup';
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import CreateListing from './CreateListing';
 import './ListingView.css'
 import APIservice from '../../APIservice';
 
-const ListingView = () => {
+
+const ListingView = () => { 
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -13,34 +14,37 @@ const ListingView = () => {
     setIsOpen(!isOpen);
   }
 
-  const [listings, setListings] = useState([])
+  const [listings, setListings] = useState([])  
 
-  APIservice.getListings('')
-  .then(resp=>resp.json())
-  .then(resp=>setListings(resp))
-  .then(error=>console.log(error))
+  const [state, setState] = useState({})
 
-  let state = {
-  };
-  
   const handleChangedChx = (e) => {
-    state[e.target.id] = e.target.checked
-    console.log(state)
+    setState(prevState => ({
+      ...prevState,
+      [e.target.id]: e.target.checked
+    }));
+  }
+  console.log(state)
+
+
+  useEffect(()=>{
     let params='?'
-    
+  
     for(const key in state){
       console.log(state[key])
       if(state[key]){
         params += key + '&'
       }
     }
-  
-    console.log(params)
+
     APIservice.getListings(params)
     .then(resp=>resp.json())
     .then(resp=>setListings(resp))
     .then(error=>console.log(error))
-  }
+  },[state]
+  )
+  
+  
   
 
 
@@ -72,11 +76,22 @@ const ListingView = () => {
         <label htmlFor="teater">Teater</label><br/>
         <input type="checkbox" id="event_type=f" name="festival" onChange ={e => handleChangedChx(e)}></input>
         <label htmlFor="festival">Festival</label> <br/>
+
+        <br/>
+        <br/>
+        <h6>Sortering</h6>
+        <select class="form-select" aria-label="Default select example" onSelect={e=>console.log(e)}>
+          <option selected>Open this select menu</option>
+          <option value="1">Pris Høy-Lav</option>
+          <option value="2">Pris Lav-Høy</option>
+          <option value="3">Nyest først</option>
+          <option value="3">Eldst først</option>
+        </select>
       </div>
 
       <div className='listingView'>
         {listings.map((listing, index) => (
-          <Listing key={index} header={listing.title} description={listing.description} publisher={listing.owner} type={listing.type}></Listing>
+          <Listing key={index} header={listing.title} description={listing.description} publisher={listing.owner} type={listing.listing_type}></Listing>
         ))}
       </div>
       {isOpen && <Popup

@@ -15,6 +15,7 @@ export default class APIservice {
 
 
   static getListings(queries){
+    console.log("FETCHING from: http://127.0.0.1:8000/api/listings/"+queries)
     return(fetch('http://127.0.0.1:8000/api/listings/'+queries, {
       'method': 'GET',
       headers: {

@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
 import React from 'react';
 import ProfilePage from './components/Profile/ProfilePage';
-import {useCookies} from 'react-cookie'
+import { useCookies } from 'react-cookie'
 
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
   //       'Content-type':'application/json',
   //       'Authorization': 'Token '+token.mytoken
   //     },
-      
+
   //     body: JSON.stringify({ title: 'Lise ska ha fest', description: 'aent nivå av syra', location:'oslo', listing_type:'b', price:'500', event_type:'konsert'})
   //   })
   //   .then(resp=>resp.json())
@@ -59,17 +59,17 @@ function App() {
         </nav>
 
 
-      <Routes>
-        <Route exact path='/' element={<ListingView/>} />
-        <Route path="/sign-in" element={<Login/>} />
-        <Route path="/sign-up" element={<SignUp/>} />
-        <Route path="/sign-up#" element={<Login/>} />
-        <Route path="/add-post" element={<CreateListing/>} />
-        <Route path="/my-user" element={<ProfilePage/>} />
+        <Routes>
+          <Route exact path='/' element={<ListingView />} />
+          <Route path="/sign-in" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/sign-up#" element={<Login />} />
+          <Route path="/add-post" element={<CreateListing />} />
+          <Route path="/my-user" element={<ProfilePage />} />
 
-      </Routes>
-          
-    </div>
+        </Routes>
+
+      </div>
     </Router>
   );
 }

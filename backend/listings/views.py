@@ -53,11 +53,8 @@ class ListingViewSet(MultiSerializerViewSet):
     valid_orderings = (
         'date',
         'price',
-        # Location is a bit silly
-        'location',
         '-date',
         '-price',
-        '-location',
     )
 
     # finn.no/?param1=katt&param2=pus&sort=-date

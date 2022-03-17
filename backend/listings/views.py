@@ -68,24 +68,27 @@ class ListingViewSet(MultiSerializerViewSet):
 
         # The names of these parameters are mirrors of the database attributes
         # Possible options can be found in listings/models.py
-        listing_type = params.get('listing_type')
-        event_type = params.get('event_type')
-        location = params.get('location')
+        listing_type = params.getlist('listing_type')
+        event_type = params.getlist('event_type')
+        location = params.getlist('location')
         sort = params.get('sort')  # prefix value with - to sort descending
 
+        print(listing_type)
+
+        # default order
         if sort is None or sort not in self.valid_orderings:
             sort = 'date'
 
         queryset = queryset.order_by(sort)
 
-        if listing_type is not None:
-            queryset = queryset.filter(listing_type=listing_type)
+        if listing_type:
+            queryset = queryset.filter(listing_type__in=listing_type)
 
-        if event_type is not None:
-            queryset = queryset.filter(event_type=event_type)
+        if event_type:
+            queryset = queryset.filter(event_type__in=event_type)
 
-        if location is not None:
-            queryset = queryset.filter(location=location)
+        if location:
+            queryset = queryset.filter(location__in=location)
 
         return queryset
 

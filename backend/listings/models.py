@@ -28,7 +28,7 @@ class Listing(models.Model):
         """
         THEATRE = 't'
         CONCERT = 'c'
-        PARTY = 'p'
+        FESTIVAL = 'f'
 
     owner = models.ForeignKey(
         Profile, on_delete=models.CASCADE, blank=False, null=False)

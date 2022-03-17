@@ -49,7 +49,7 @@ class ListingViewSet(MultiSerializerViewSet):
 
     model = Listing
     context_object_name = 'listings'
-    #queryset = Listing.objects.all()
+    queryset = Listing.objects.all()
     valid_orderings = (
         'date',
         'price',

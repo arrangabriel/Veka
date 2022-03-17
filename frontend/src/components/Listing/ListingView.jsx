@@ -33,28 +33,31 @@ const ListingView = () => {
 
   return (
     <div className='listingPage'>
-      <div className='filterbox'>
-        <h6>Velg kategori</h6>
-        <input type="checkbox" id="tilsalg" name="tilsalg"></input>
-        <label htmlFor="tilsalg">Til salg</label>
-        <input type="checkbox" id="onskeskjopt" name="onskeskjopt"></input>
-        <label htmlFor="onskeskjopt">Ønskes kjøpt</label>
+      <div className='filterbox container'>
+          <h6>Velg kategori</h6>
+          <input type="checkbox" id="tilsalg" name="tilsalg"></input>
+          <label htmlFor="tilsalg">Til salg</label> <br/>
+          <input type="checkbox" id="onskeskjopt" name="onskeskjopt"></input>
+          <label htmlFor="onskeskjopt">Ønskes kjøpt</label><br/>
+          <br/>
+          <br/>
 
-        <h6>Sted</h6>
-        <input type="checkbox" id="bergen" name="bergen"></input>
-        <label htmlFor="bergen">Bergen</label>
-        <input type="checkbox" id="oslo" name="oslo"></input>
-        <label htmlFor="oslo">Oslo</label>
-        <input type="checkbox" id="stavanger" name="stavanger"></input>
-        <label htmlFor="stavanger">Stavanger</label>
-
-        <h6>Arrangement</h6>
-        <input type="checkbox" id="konsert" name="konsert"></input>
-        <label htmlFor="konsert">Konsert</label>
-        <input type="checkbox" id="teater" name="teater"></input>
-        <label htmlFor="teater">Teater</label>
-        <input type="checkbox" id="stavanger" name="festival"></input>
-        <label htmlFor="festival">Festival</label>
+          <h6>Sted</h6>
+          <input type="checkbox" id="bergen" name="bergen"></input>
+          <label htmlFor="bergen">Bergen</label><br/>
+          <input type="checkbox" id="oslo" name="oslo"></input>
+          <label htmlFor="oslo">Oslo</label><br/>
+          <input type="checkbox" id="stavanger" name="stavanger"></input>
+          <label htmlFor="stavanger">Stavanger</label><br/>
+          <br/>
+          <br/>
+          <h6>Arrangement</h6>
+          <input type="checkbox" id="konsert" name="konsert"></input>
+          <label htmlFor="konsert">Konsert</label><br/>
+          <input type="checkbox" id="teater" name="teater"></input>
+          <label htmlFor="teater">Teater</label><br/>
+          <input type="checkbox" id="stavanger" name="festival"></input>
+          <label htmlFor="festival">Festival</label> <br/>
       </div>
 
       <div className='listingView'>

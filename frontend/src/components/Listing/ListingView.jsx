@@ -3,6 +3,27 @@ import Popup from '../Popup/Popup';
 import { useState, useEffect } from 'react';
 import CreateListing from './CreateListing';
 import './ListingView.css'
+import APIservice from '../../APIservice';
+
+let state = {
+  tilsalg: false,
+  onskeskjopt: false,
+  bergen: false,
+  oslo: false,
+  stavanger: false,
+  trondheim: false,
+  konsert: false,
+  teater: false,
+  festival: false
+};
+
+const handleChangedChx = (e) => {
+  state[e.target.id] = e.target.checked
+  console.log(state)
+  useEffect('http://127.0.0.1:8000/api/listings/?location=oslo&location=bergen')
+}
+
+
 
 
 const ListingView = () => {
@@ -15,41 +36,32 @@ const ListingView = () => {
 
   const [listings, setListings] = useState([])
 
-  useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/listings/', {
-      'method': 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        // 'X-CSRFToken':'SCazQ7huOf4Rvk2YoFB1WQ2blyg0sbYGIUffnz0p4hrv9MDV54ACiMwOnAbZ82MU'
-
-      }
-    })
-      .then(resp => resp.json())
-      .then(resp => setListings(resp))
-      .catch(error => console.log(error))
-  }, [])
-
+  APIservice.getListings('')
+  .then(resp=>resp.json())
+  .then(resp=>console.log(resp))
+  .then(error=>console.log(error))
+  
 
 
   return (
     <div className='listingPage'>
       <div className='filterbox'>
         <h6>Velg kategori</h6>
-        <input type="checkbox" id="tilsalg" name="tilsalg"></input>
+        <input type="checkbox" id="listing_type=s" name="tilsalg" onChange ={e => handleChangedChx(e)}></input>
         <label htmlFor="tilsalg">Til salg</label>
         <input type="checkbox" id="onskeskjopt" name="onskeskjopt"></input>
         <label htmlFor="onskeskjopt">Ønskes kjøpt</label>
 
         <h6>Sted</h6>
-        <input type="checkbox" id="bergen" name="bergen"></input>
+        <input type="checkbox" id="location=bergen" name="bergen"></input>
         <label htmlFor="bergen">Bergen</label>
-        <input type="checkbox" id="oslo" name="oslo"></input>
+        <input type="checkbox" id="location=oslo" name="oslo"></input>
         <label htmlFor="oslo">Oslo</label>
         <input type="checkbox" id="stavanger" name="stavanger"></input>
         <label htmlFor="stavanger">Stavanger</label>
 
         <h6>Arrangement</h6>
-        <input type="checkbox" id="konsert" name="konsert"></input>
+        <input type="checkbox" id="event_type=c" name="konsert"></input>
         <label htmlFor="konsert">Konsert</label>
         <input type="checkbox" id="teater" name="teater"></input>
         <label htmlFor="teater">Teater</label>

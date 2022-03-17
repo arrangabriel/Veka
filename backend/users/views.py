@@ -1,3 +1,4 @@
+from urllib import response
 from .serializers import ProfileSerializer, UserSerializer, LoginSerializer
 from .models import Profile
 from rest_framework.response import Response
@@ -28,8 +29,9 @@ class ProfilesViewSet(MultiSerializerViewSet):
         'create': UserSerializer,
         'list': ProfileSerializer,
         'retrieve': ProfileSerializer,
-        'default': UserSerializer,
-        'metadata': ProfileSerializer
+        'default': ProfileSerializer,
+        'metadata': ProfileSerializer,
+        'detail': ProfileSerializer
     }
 
     def get_permissions(self):
@@ -104,7 +106,14 @@ class EditViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
-    def create(self, request):
+    def update(self, request, pk):
+
+        requestUser = request.data.get('user.username')
+        loggedInUser = request.user.username
+
+        if (requestUser != loggedInUser):
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
         bio = request.data.get('bio')
         location = request.data.get('location')
         first_name = request.data.get('first_name')

@@ -40,10 +40,11 @@ export default class APIservice {
     }))
   }
 
-  static CreateListings(body, token) {
+  static EditUser(body, token, userID) {
     console.log(token)
-    return (fetch('http://127.0.0.1:8000/api/listings/', {
-      method: 'GET',
+    userID = 22 //TODO
+    return (fetch('http://127.0.0.1:8000/api/edit/' + userID, {
+      method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Authorization': 'Token ' + token.mytoken,

@@ -1,7 +1,19 @@
 import React from 'react'
 import blank_profile from './img/blank_profile.png'
+import ProfilePage from './ProfilePage'
+import { useState } from 'react'
+import EditProfile from './EditProfile'
+import Popup from '../Popup/Popup'
+
 
 const Profile = ({ first_name, last_name, bio, user, avatar, location }) => {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const togglePopup = () => {
+        setIsOpen(!isOpen);
+    }
+
     return (
         <div className="container bcontent">
             <div className="card">
@@ -19,12 +31,18 @@ const Profile = ({ first_name, last_name, bio, user, avatar, location }) => {
                     <div className='listingButtonsDiv col-sm-3'>
                         <div className='container'>
                             <div className='row justify-content-end no-gutters'>
-                                <button className="btn btn-primary">Rediger bruker</button>
+                                <button onClick={togglePopup} className="btn btn-primary">Rediger bruker</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {isOpen && <Popup
+                content={<>
+                    <EditProfile></EditProfile>
+                </>}
+                handleClose={togglePopup}
+            />}
         </div>
     )
 }

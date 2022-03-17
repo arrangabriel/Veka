@@ -8,12 +8,8 @@ import SignUp from './components/SignUp/SignUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
 import React from 'react';
-<<<<<<< HEAD
-import { useCookies } from 'react-cookie'
-=======
 import ProfilePage from './components/Profile/ProfilePage';
 import {useCookies} from 'react-cookie'
->>>>>>> 80d5b8ce58892d44edb502437544179a0f5ed359
 
 
 function App() {

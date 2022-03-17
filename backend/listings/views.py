@@ -1,6 +1,3 @@
-from os import stat
-from urllib import response
-from wsgiref import headers
 from .serializers import ListingReadSerializer, ListingWriteSerializer
 from .models import Listing, Profile
 from rest_framework import viewsets
@@ -8,7 +5,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.decorators import action
-# from rest_framework.authentication import TokenAuthentication
 
 
 class MultiSerializerViewSet(viewsets.ModelViewSet):
@@ -70,8 +66,6 @@ class ListingViewSet(MultiSerializerViewSet):
         event_type = params.getlist('event_type')
         location = params.getlist('location')
         sort = params.get('sort')  # prefix value with - to sort descending
-
-        print(listing_type)
 
         # default order
         if sort is None or sort not in self.valid_orderings:

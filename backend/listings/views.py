@@ -72,6 +72,7 @@ class ListingViewSet(MultiSerializerViewSet):
         )
         return Response(data='Interest shown succesfully!', status=status.HTTP_200_OK)
 
+    # get interested users
     @action(methods=['get'], detail=True, permission_classes=[IsAuthenticated])
     def interested(self, request, pk=None):
         listing = self.queryset.get(id=pk)

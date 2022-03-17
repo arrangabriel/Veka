@@ -5,7 +5,8 @@ from .models import Listing
 class ListingReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
-        fields = ('owner', 'title', 'description',
+        # TODO this needs to return ID
+        fields = ('id', 'owner', 'title', 'description',
                   'date', 'location', 'listing_type', 'event_type', 'price')
 
 

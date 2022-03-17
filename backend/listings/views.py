@@ -39,7 +39,7 @@ class ListingViewSet(MultiSerializerViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-        if self.action == 'list' or self.action == 'metadata':
+        if self.action == 'list' or self.action == 'metadata' or self.action == 'retrieve':
             permission_classes = [AllowAny]
         elif self.action == 'create':
             permission_classes = [IsAuthenticated]

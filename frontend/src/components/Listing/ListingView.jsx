@@ -49,6 +49,8 @@ const ListingView = () => {
           <label htmlFor="oslo">Oslo</label><br/>
           <input type="checkbox" id="stavanger" name="stavanger"></input>
           <label htmlFor="stavanger">Stavanger</label><br/>
+          <input type="checkbox" id="trondheim" name="trondheim"></input>
+          <label htmlFor="stavanger">Trondheim</label><br/>
           <br/>
           <br/>
           <h6>Arrangement</h6>

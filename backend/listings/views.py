@@ -1,6 +1,3 @@
-from os import stat
-from urllib import response
-from wsgiref import headers
 from .serializers import ListingReadSerializer, ListingWriteSerializer
 from .models import Listing, Profile
 from rest_framework import viewsets

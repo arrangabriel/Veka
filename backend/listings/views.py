@@ -1,6 +1,3 @@
-from os import stat
-from urllib import response
-from wsgiref import headers
 from .serializers import ListingReadSerializer, ListingWriteSerializer
 from .models import Listing, Profile
 from rest_framework import viewsets
@@ -8,7 +5,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.decorators import action
-# from rest_framework.authentication import TokenAuthentication
 
 
 class MultiSerializerViewSet(viewsets.ModelViewSet):
@@ -65,18 +61,20 @@ class ListingViewSet(MultiSerializerViewSet):
 
         # The names of these parameters are mirrors of the database attributes
         # Possible options can be found in listings/models.py
+        user = params.get('user')
         listing_type = params.getlist('listing_type')
         event_type = params.getlist('event_type')
         location = params.getlist('location')
         sort = params.get('sort')  # prefix value with - to sort descending
-
-        print(listing_type)
 
         # default order
         if sort is None or sort not in self.valid_orderings:
             sort = 'date'
 
         queryset = queryset.order_by(sort)
+
+        if user is not None:
+            queryset = queryset.filter(owner__id=user)
 
         if listing_type:
             queryset = queryset.filter(listing_type__in=listing_type)

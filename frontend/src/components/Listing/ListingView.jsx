@@ -14,7 +14,13 @@ const ListingView = () => {
     setIsOpen(!isOpen);
   }
 
-  const [listings, setListings] = useState([])  
+  const [listings, setListings] = useState([])
+
+  const [sorting, setSorting] =useState('date')
+  const handleSort = (e)=>{
+    let {name,value}=e.target
+    setSorting(value)
+  }
 
   const [state, setState] = useState({})
 
@@ -24,24 +30,22 @@ const ListingView = () => {
       [e.target.id]: e.target.checked
     }));
   }
-  console.log(state)
 
 
   useEffect(()=>{
     let params='?'
   
     for(const key in state){
-      console.log(state[key])
       if(state[key]){
         params += key + '&'
       }
     }
+    params+='sort='+sorting
 
     APIservice.getListings(params)
     .then(resp=>resp.json())
     .then(resp=>setListings(resp))
-    .then(error=>console.log(error))
-  },[state]
+  },[state,sorting]
   )
   
   
@@ -80,18 +84,18 @@ const ListingView = () => {
         <br/>
         <br/>
         <h6>Sortering</h6>
-        <select class="form-select" aria-label="Default select example" onSelect={e=>console.log(e)}>
-          <option selected>Open this select menu</option>
-          <option value="1">Pris Høy-Lav</option>
-          <option value="2">Pris Lav-Høy</option>
-          <option value="3">Nyest først</option>
-          <option value="3">Eldst først</option>
+        <select defaultValue="" className="form-select" aria-label="Default select example" onChange={e=>handleSort(e)}>
+          {/* setSorting(e.target.name) */}
+          <option value="date">Dato</option>
+          <option value="-price">Pris Høy-Lav</option>
+          <option value="price">Pris Lav-Høy</option>
+          <option value="-date">Senest først</option>
         </select>
       </div>
 
       <div className='listingView'>
         {listings.map((listing, index) => (
-          <Listing key={index} header={listing.title} description={listing.description} publisher={listing.owner} type={listing.listing_type}></Listing>
+          <Listing key={index} header={listing.title} description={listing.description} publisher={listing.username} type={listing.listing_type}></Listing>
         ))}
       </div>
       {isOpen && <Popup

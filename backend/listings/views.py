@@ -109,6 +109,9 @@ class ListingViewSet(MultiSerializerViewSet):
                     listing['interested'] = 'true'
                 else:
                     listing['interested'] = 'false'
+                # remove interested users field if user is not the listing owner
+                if request.user.id != listing['owner']['id']:
+                    del listing['interested_users']
         return Response(serializer.data)
 
     def create(self, request):

@@ -28,14 +28,14 @@ class Listing(models.Model):
         """
         THEATRE = 't'
         CONCERT = 'c'
-        PARTY = 'p'
+        FESTIVAL = 'f'
 
     owner = models.ForeignKey(
         Profile, on_delete=models.CASCADE, blank=False, null=False)
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=500)
     location = models.CharField(max_length=9, choices=Locations.choices)
-    date = models.DateField(auto_now=True)
+    date = models.DateField()
     listing_type = models.CharField(max_length=1, choices=listingType.choices)
     event_type = models.CharField(max_length=2, choices=eventType.choices)
     complete = models.BooleanField(default=False)

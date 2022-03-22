@@ -13,6 +13,16 @@ export default class APIservice {
     }))
   }
 
+
+  static getListings(queries){
+    return(fetch('http://127.0.0.1:8000/api/listings/'+queries, {
+      'method': 'GET',
+      headers: {
+        'Content-type': 'application/json', 
+      }
+    }))
+  }
+
   static Signup(body) {
     return (fetch('http://127.0.0.1:8000/api/profiles/', {
       method: 'POST',

@@ -60,7 +60,7 @@ function App() {
 
 
       <Routes>
-        <Route exact path='/' element={<ListingView/>} />
+        <Route exact path='/' element={<ListingView token={token}/>} />
         <Route path="/sign-in" element={<Login/>} />
         <Route path="/sign-up" element={<SignUp/>} />
         <Route path="/sign-up#" element={<Login/>} />

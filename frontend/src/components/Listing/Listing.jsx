@@ -1,8 +1,18 @@
 import React from 'react'
 import './Listing.css';
 import fest from './img/fest.jpg'
+import APIservice from '../../APIservice';
+import { useCookies } from "react-cookie";
 
-const Listing = ({header,date,description,img,publisher,type}) => {
+const Listing = ({header,date,description,img,publisher,type,id}) => {
+
+    const [cookies, setCookies] = useCookies()
+
+    const handleShowInterest= (id)=>{
+        APIservice.ShowInterest(id,cookies)
+        console.log('this is id: '+id+', this is token: '+cookies)
+    }
+
   return (
   <div className="container bcontent">
         <div className="card"> 
@@ -24,7 +34,7 @@ const Listing = ({header,date,description,img,publisher,type}) => {
                             <button className="btn btn-primary">Besøk bruker</button>
                         </div>
                         <div className='row justify-content-end'>
-                            <button className="btn btn-primary">Meld interesse</button>
+                            <button value={id} className="btn btn-primary" onClick={e=>handleShowInterest(e.target.value)}>Meld interesse</button>
                         </div>
                     </div>
                 </div>

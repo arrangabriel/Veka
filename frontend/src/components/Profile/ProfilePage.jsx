@@ -6,11 +6,9 @@ import { useCookies } from 'react-cookie'
 
 const ProfilePage = ({token}) => {
 
-  const [userID, setUserID] = useState()
-  //const [token, setToken] = useCookies(['mytoken'])
+  const [userID, setUserID] = useState(-1)
 
   useEffect(() => {
-    console.log("token: " + token.mytoken)
     fetch('http://127.0.0.1:8000/api/profiles/me/', {
       'method': 'GET',
       headers: {
@@ -20,10 +18,9 @@ const ProfilePage = ({token}) => {
       credentials: 'include',
     })
       .then(resp => resp.json())
-      .then(resp => console.log(resp))
       .then(resp => setUserID(resp))
       .catch(error => console.log(error))
-  })
+  },[])
 
   return (
     <div>

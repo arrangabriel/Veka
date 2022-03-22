@@ -11,7 +11,7 @@ class ListingReadSerializer(serializers.ModelSerializer):
         model = Listing
         # TODO this needs to return ID
         fields = ('id', 'owner', 'username', 'title', 'description',
-                  'date', 'location', 'listing_type', 'event_type', 'price')
+                  'date', 'location', 'listing_type', 'event_type', 'price', 'interested_users')
         depth = 1
 
 

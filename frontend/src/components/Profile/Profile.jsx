@@ -23,6 +23,8 @@ const Profile = ({ first_name, last_name, bio, user, avatar, location }) => {
                     </div>
                     <div className="col-sm-5">
                         <div className="card-body">
+                            <h4>{user.username}</h4>
+                            <h5>{user.email}</h5>
                             <h5 className="card-title">{first_name} {last_name}</h5>
                             <p className="card-text">{bio}</p>
                             <p className="card-text">{location}</p>

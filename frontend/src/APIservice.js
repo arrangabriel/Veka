@@ -1,5 +1,3 @@
-
-
 export default class APIservice {
   static Login(body) {
     return (fetch('http://127.0.0.1:8000/auth/', {
@@ -63,6 +61,18 @@ export default class APIservice {
       },
       credentials: 'include',
       body: JSON.stringify(body)
+    }))
+  }
+
+  static getUser(userID, token){
+    console.log("FETCHING from: http://127.0.0.1:8000/api/profiles/"+userID)
+    return(fetch('http://127.0.0.1:8000/api/profiles/'+ userID + '/', {
+      'method': 'GET',
+      headers: {
+        'Authorization': 'Token ' + token.mytoken,
+        'Content-type': 'application/json', 
+      },
+      credentials: 'include'
     }))
   }
 

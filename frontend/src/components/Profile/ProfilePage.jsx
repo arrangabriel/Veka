@@ -3,10 +3,23 @@ import Profile from './Profile'
 import MyOwnListingsHandler from '../MyListings/MyOwnListingsHandler'
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie'
+import APIservice from '../../APIservice';
 
 const ProfilePage = ({token}) => {
 
-  const [userID, setUserID] = useState(-1)
+  const [userID, setUserID] = useState(1)
+  const [profile, setProfile] = useState({
+    "id": 1,
+        "user": {
+            "username": "",
+            "email": "",
+            "password": ""
+        },
+        "first_name": "",
+        "last_name": "",
+        "bio": "",
+        "location": ""
+  })
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/profiles/me/', {
@@ -19,12 +32,23 @@ const ProfilePage = ({token}) => {
     })
       .then(resp => resp.json())
       .then(resp => setUserID(resp))
+      .then(APIservice.getUser(userID, token)
+        .then(resp => resp.json())
+        .then(resp => setProfile(resp)))
       .catch(error => console.log(error))
   },[])
 
+  /*useEffect(() => {
+    let url = 'http://127.0.0.1:8000/api/profiles/' + 1 + '/'
+    console.log('Denne kjøres-')
+    APIservice.getUser(userID)
+      .then(resp => resp.json())
+      .then(resp => setProfile(resp))
+  }, [userID])*/
+
   return (
     <div>
-      <Profile first_name={"Sander"} last_name={"Eikeland"} bio={"Leter etter den feteste festen"} location={"Trondheim"} avatar="blank_profile"></Profile>
+      <Profile user={profile.user} first_name={profile.first_name} last_name={profile.last_name} bio={profile.bio} location={profile.location} avatar="blank_profile"></Profile>
       <MyOwnListingsHandler userID={userID}></MyOwnListingsHandler>
     </div>
   )

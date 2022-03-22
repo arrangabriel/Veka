@@ -1,8 +1,9 @@
+import './Login.css';
 import React from "react";
-import {Link, Router} from "react-router-dom";
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import APIservice from "../../APIservice";
 import {useCookies} from 'react-cookie';
+
 
 
 
@@ -22,7 +23,7 @@ const LoginForm = () => {
 
 
   return (
-  <div>
+  <div className='loginElements'>
     <h3>Logg inn</h3>
 
     <div className="form-group">
@@ -41,13 +42,14 @@ const LoginForm = () => {
             <label className="custom-control-label" htmlFor="customCheck1">Husk meg</label>
         </div>
     </div>
-
-    <button className="btn btn-primary btn-block" onClick={bug}>Logg inn</button>
+        <a href="/" className="btn btn-primary btn-block" onClick={bug}>Logg inn</a>
     <p className="forgot-password text-right">
-        Glemt <a href="#">passord?</a>
+        <a href="#">Glemt passord?</a>
     </p>
     <a href="/sign-up" className="btn btn-secondary"> Registrer bruker</a>
 </div>);
+
+
 }
 
 export default LoginForm

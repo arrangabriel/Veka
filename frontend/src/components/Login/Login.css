@@ -1,0 +1,12 @@
+.loginElements{
+    padding: 15px;
+}
+.forgot-password,
+.forgot-password a {
+  text-align: right;
+  font-size: 16px;
+  padding-top: 6px;
+  color: #167bff;
+  margin: 0;
+  padding-right: 10px;
+}

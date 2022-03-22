@@ -49,14 +49,13 @@ export default class APIservice {
     }))
   }
 
-  static EditUser(body, token, userID) {
-    console.log(token)
-    userID = 22 //TODO
+  static EditUser(body, userID, token) {
+    userID = 1 //todo
     return (fetch('http://127.0.0.1:8000/api/edit/' + userID, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
-        'Authorization': 'Token ' + token.mytoken,
+        'Authorization': 'Token ' + token,
         'Content-type': 'application/json',
       },
       credentials: 'include',

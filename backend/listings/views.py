@@ -105,12 +105,10 @@ class ListingViewSet(MultiSerializerViewSet):
         serializer = self.get_serializer(queryset, many=True)
         for listing in serializer.data:
             if request.user.is_authenticated:
-                print(listing)
-                #
-                #if request.user.id in listing['interested']:
-                #    listing['interested'] = 'true'
-                #else:
-                #    listing['interested'] = 'false'
+                if request.user.id in listing['interested_users']:
+                    listing['interested'] = 'true'
+                else:
+                    listing['interested'] = 'false'
         return Response(serializer.data)
 
     def create(self, request):

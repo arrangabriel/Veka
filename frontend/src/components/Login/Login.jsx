@@ -42,10 +42,11 @@ const LoginForm = () => {
             <label className="custom-control-label" htmlFor="customCheck1">Husk meg</label>
         </div>
     </div>
-        <a href="/" className="btn btn-primary btn-block" onClick={bug}>Logg inn</a>
-    <p className="forgot-password text-right">
-        <a href="#">Glemt passord?</a>
-    </p>
+    <br></br>
+    <a id="logIn" href="/" className="btn btn-primary btn-block" onClick={bug}>Logg inn</a>
+    <p id="forgPas" className="forgot-password text-right"> <a href="#">Glemt passord?</a></p>
+    <br></br>
+    <br></br>
     <a href="/sign-up" className="btn btn-secondary"> Registrer bruker</a>
 </div>);
 

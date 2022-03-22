@@ -104,15 +104,31 @@ class ListingViewSet(MultiSerializerViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         for listing in serializer.data:
+            listing['interested'] = 'false'
             if request.user.is_authenticated:
                 if request.user.id in listing['interested_users']:
                     listing['interested'] = 'true'
-                else:
-                    listing['interested'] = 'false'
                 # remove interested users field if user is not the listing owner
                 if request.user.id != listing['owner']['id']:
                     del listing['interested_users']
+            else:
+                del listing['interested_user']
         return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        listing = serializer.data
+        listing['interested'] = 'false'
+        if request.user.is_authenticated:
+            if request.user.id in listing['interested_users']:
+                listing['interested'] = 'true'
+                # remove interested users field if user is not the listing owner
+            if request.user.id != listing['owner']['id']:
+                del listing['interested_users']
+        else:
+            del listing['interested_user']
+        return Response(listing)
 
     def create(self, request):
         serializer = self.get_serializer(data=request.data)

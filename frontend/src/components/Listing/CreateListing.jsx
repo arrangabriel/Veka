@@ -66,6 +66,7 @@ const UserPost = () => {
                     <option value="oslo">Oslo</option>
                     <option value="bergen">Bergen</option>
                     <option value="trondheim">Trondheim</option>
+                    <option value="stavanger">Stavanger</option>
                 </select>
             </div>
 

@@ -24,7 +24,7 @@ const ListingHandler = () => {
   return (
     <div className='listingView'>
           {listings.map((listing, index)=>(
-              <Listing key={index} header={listing.title} description={listing.description} publisher={listing.owner} type={listing.type}></Listing>
+              <Listing key={index} header={listing.title} description={listing.description} publisher={listing.username} type={listing.type}></Listing>
           ))}
       </div>
   )

@@ -14,7 +14,7 @@ const Listing = ({header,date,description,img,publisher,type}) => {
                     <div className="card-body">
                         <h5 className="card-title">{header}</h5>
                         <p className="card-text">{description}</p>
-                        <p className='card-text' style={{color:'green'}}>{type==='b' ? 'Til salgs' : 'Ønskes kjøpt'}</p>
+                        <p className='card-text' style={{color:'green'}}><b>{type==='s' ? 'Til salgs' : 'Ønskes kjøpt'}</b></p>
                         <p className='card-text'>{publisher}</p>
                     </div>
                 </div>

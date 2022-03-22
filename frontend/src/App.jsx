@@ -64,7 +64,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-up#" element={<Login />} />
           <Route path="/add-post" element={<CreateListing />} />
-          <Route path="/my-user" element={<ProfilePage />} />
+          <Route path="/my-user" element={<ProfilePage token={token}/>} />
 
         </Routes>
 

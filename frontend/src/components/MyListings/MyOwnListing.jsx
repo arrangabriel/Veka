@@ -1,8 +1,17 @@
 import React from 'react'
 import './MyOwnListing.css';
 import fest from './img/fest.jpg'
+import APIservice from '../../APIservice';
+import {useCookies} from "react-cookie";
 
-const MyOwnListing = ({header,date,description,img,publisher,type}) => {
+const MyOwnListing = ({header,date,description,img,publisher,type, id}) => {
+
+    const [cookies, setCookies] = useCookies()
+
+    const handleSold = (id) => {
+        APIservice.SetAsSold(id, cookies)
+    }
+
   return (
   <div className="container bcontent">
         <div className="card"> 
@@ -24,7 +33,7 @@ const MyOwnListing = ({header,date,description,img,publisher,type}) => {
                             <button className="btn btn-primary">Vis intersserte</button>
                         </div>
                         <div className='row justify-content-end'>
-                            <button className="btn btn-primary">Marker som solgt</button>
+                            <button value={id} className="btn btn-primary" onClick={e=>handleSold(e.target.value)}>Marker som solgt</button>
                         </div>
                     </div>
                 </div>

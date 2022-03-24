@@ -27,7 +27,7 @@ const MyOwnListingsHandler = ({userID}) => {
 
     <div>
       {MyListings.map((Mylisting, index) => (
-        <MyOwnListing key={index} header={Mylisting.title} description={Mylisting.description} publisher={Mylisting.usernam} type={Mylisting.event_type}></MyOwnListing>
+        <MyOwnListing key={index} header={Mylisting.title} description={Mylisting.description} publisher={Mylisting.usernam} type={Mylisting.event_type} id={Mylisting.id}></MyOwnListing>
       ))}
     </div>
   )

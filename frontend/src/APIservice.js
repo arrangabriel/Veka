@@ -52,7 +52,6 @@ export default class APIservice {
   }
 
   static EditUser(body, userID, token) {
-    userID = 1 //todo
     return (fetch('http://127.0.0.1:8000/api/edit/' + userID, {
       method: 'PUT',
       headers: {
@@ -66,7 +65,7 @@ export default class APIservice {
   }
 
   static getUser(userID, token){
-    console.log("FETCHING from: http://127.0.0.1:8000/api/profiles/"+userID)
+    console.log("FETCHING from: http://127.0.0.1:8000/api/profiles/" + userID)
     return(fetch('http://127.0.0.1:8000/api/profiles/'+ userID + '/', {
       'method': 'GET',
       headers: {
@@ -79,6 +78,17 @@ export default class APIservice {
 
   static ShowInterest(id, token) {
     return (fetch('http://127.0.0.1:8000/api/listings/'+id+'/show_interest/', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Authorization': 'Token ' + token.mytoken,
+        'Content-type': 'application/json',
+      },
+      credentials: 'include',
+    }))
+  }
+  static SetAsSold(id, token){
+    return (fetch('http://127.0.0.1:8000/api/listings/'+id+'/mark_sold/', {
       method: 'GET',
       headers: {
         Accept: 'application/json',

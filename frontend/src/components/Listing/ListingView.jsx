@@ -5,7 +5,7 @@ import CreateListing from './CreateListing';
 import './ListingView.css'
 
 
-const ListingView = () => {
+const ListingView = ({token}) => { 
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,19 +16,25 @@ const ListingView = () => {
   const [listings, setListings] = useState([])
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/listings/', {
-      'method': 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        // 'X-CSRFToken':'SCazQ7huOf4Rvk2YoFB1WQ2blyg0sbYGIUffnz0p4hrv9MDV54ACiMwOnAbZ82MU'
+    let params = '?'
 
+    for(const key in state){
+      if(state[key]){
+        params += key + '&'
       }
-    })
-      .then(resp => resp.json())
-      .then(resp => setListings(resp))
-      .catch(error => console.log(error))
-  }, [])
+    }
 
+    params+='sort='+sorting
+    params+='&ignore_self'
+
+    APIservice.getListings(params,token)
+    .then(resp=>resp.json())
+    .then(resp=>setListings(resp))
+  },[state,sorting,token]
+  )
+  
+  
+  
 
 
   return (
@@ -64,7 +70,11 @@ const ListingView = () => {
 
       <div className='listingView'>
         {listings.map((listing, index) => (
+<<<<<<< HEAD
           <Listing key={index} header={listing.title} description={listing.description} publisher={listing.owner} type={listing.type}></Listing>
+=======
+          <Listing key={index} header={listing.title} description={listing.description} publisher={listing.username} type={listing.listing_type} id={listing.id}></Listing>
+>>>>>>> b1d0eaf484243eff556bf257e7e3dd8d29fd227d
         ))}
       </div>
       {isOpen && <Popup

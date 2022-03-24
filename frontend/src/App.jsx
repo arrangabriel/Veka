@@ -58,16 +58,14 @@ function App() {
         </nav>
 
 
-        <Routes>
-          <Route exact path='/' element={<ListingView />} />
-          <Route path="/sign-in" element={<Login />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/sign-up#" element={<Login />} />
-          <Route path="/add-post" element={<CreateListing />} />
-          <Route path="/my-user" element={<ProfilePage token={token}/>} />
-
-        </Routes>
-
+      <Routes>
+        <Route exact path='/' element={<ListingView token={token}/>} />
+        <Route path="/sign-in" element={<Login/>} />
+        <Route path="/sign-up" element={<SignUp/>} />
+        <Route path="/sign-up#" element={<Login/>} />
+        <Route path="/add-post" element={<CreateListing/>} />
+        <Route path="/my-user" element={<ProfilePage token={token}/>} />
+      </Routes>
       </div>
     </Router>
   );

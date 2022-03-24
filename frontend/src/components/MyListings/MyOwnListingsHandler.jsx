@@ -9,6 +9,7 @@ const MyOwnListingsHandler = ({userID}) => {
 
   useEffect(() => {
     let url = 'http://127.0.0.1:8000/api/listings/?user=' + userID
+    console.log("fetching form: " + url)
     fetch(url, {
       'method': 'GET',
       headers: {
@@ -19,6 +20,8 @@ const MyOwnListingsHandler = ({userID}) => {
       .then(resp => setMyListings(resp))
       .catch(error => console.log(error))
   },[userID])
+
+  console.log(userID)
 
   return (
 

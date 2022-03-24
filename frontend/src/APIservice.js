@@ -14,13 +14,15 @@ export default class APIservice {
   }
 
 
-  static getListings(queries){
+  static getListings(queries,token){
     console.log("FETCHING from: http://127.0.0.1:8000/api/listings/"+queries)
     return(fetch('http://127.0.0.1:8000/api/listings/'+queries, {
       'method': 'GET',
       headers: {
-        'Content-type': 'application/json', 
-      }
+        'Content-type': 'application/json',
+        'Authorization': 'Token ' + token.mytoken
+      },
+      credentials: 'include',
     }))
   }
 
@@ -48,6 +50,18 @@ export default class APIservice {
       },
       credentials: 'include',
       body: JSON.stringify(body)
+    }))
+  }
+
+  static ShowInterest(id, token) {
+    return (fetch('http://127.0.0.1:8000/api/listings/'+id+'/show_interest/', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Authorization': 'Token ' + token.mytoken,
+        'Content-type': 'application/json',
+      },
+      credentials: 'include',
     }))
   }
 }

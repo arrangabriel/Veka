@@ -5,20 +5,20 @@ import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie'
 import APIservice from '../../APIservice';
 
-const ProfilePage = ({token}) => {
+const ProfilePage = ({ token }) => {
 
-  const [userID, setUserID] = useState(1)
+  const [userID, setUserID] = useState(22)
   const [profile, setProfile] = useState({
     "id": 1,
-        "user": {
-            "username": "",
-            "email": "",
-            "password": ""
-        },
-        "first_name": "",
-        "last_name": "",
-        "bio": "",
-        "location": ""
+    "user": {
+      "username": "",
+      "email": "",
+      "password": ""
+    },
+    "first_name": "",
+    "last_name": "",
+    "bio": "",
+    "location": ""
   })
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const ProfilePage = ({token}) => {
         .then(resp => resp.json())
         .then(resp => setProfile(resp)))
       .catch(error => console.log(error))
-  },[])
+  }, [userID])
 
   /*useEffect(() => {
     let url = 'http://127.0.0.1:8000/api/profiles/' + 1 + '/'

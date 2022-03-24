@@ -40,9 +40,10 @@ class ProfilesViewSet(MultiSerializerViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
+        print(self.action)
         if self.action == 'list' or self.action == 'create' or self.action == 'metadata':
             permission_classes = [AllowAny]
-        elif self.action == 'me':
+        elif self.action == 'me' or self.action == 'retrieve':
             permission_classes = [IsAuthenticated]
         else:
             permission_classes = [IsAdminUser]

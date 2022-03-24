@@ -21,7 +21,7 @@ const MyOwnListing = ({header,date,description,img,publisher,type}) => {
                 <div className='listingButtonsDiv col-sm-3'>
                     <div className='container'>
                         <div className='row justify-content-end no-gutters'>
-                            <button className="btn btn-primary">Besøk bruker</button>
+                            <button className="btn btn-primary">Vis intersserte</button>
                         </div>
                         <div className='row justify-content-end'>
                             <button className="btn btn-primary">Marker som solgt</button>

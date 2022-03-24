@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 from os import stat
 from urllib import response
 from wsgiref import headers
-=======
 from urllib import request
->>>>>>> b1d0eaf484243eff556bf257e7e3dd8d29fd227d
 from .serializers import ListingReadSerializer, ListingWriteSerializer
 from .models import Listing, Profile
 from rest_framework import viewsets
@@ -71,11 +68,8 @@ class ListingViewSet(MultiSerializerViewSet):
 
         # The names of these parameters are mirrors of the database attributes
         # Possible options can be found in listings/models.py
-<<<<<<< HEAD
-=======
         user = params.get('user')
         ignore_self = params.get('ignore_self')
->>>>>>> b1d0eaf484243eff556bf257e7e3dd8d29fd227d
         listing_type = params.getlist('listing_type')
         event_type = params.getlist('event_type')
         location = params.getlist('location')
@@ -89,15 +83,12 @@ class ListingViewSet(MultiSerializerViewSet):
 
         queryset = queryset.order_by(sort)
 
-<<<<<<< HEAD
-=======
         if user is not None:
             queryset = queryset.filter(owner__id=user)
 
         if ignore_self is not None:
             queryset = queryset.exclude(owner__id=self.request.user.id)
 
->>>>>>> b1d0eaf484243eff556bf257e7e3dd8d29fd227d
         if listing_type:
             queryset = queryset.filter(listing_type__in=listing_type)
 

@@ -11,8 +11,6 @@ export default class APIservice {
     }))
   }
 
-<<<<<<< HEAD
-=======
 
   static getListings(queries,token){
     console.log("FETCHING from: http://127.0.0.1:8000/api/listings/"+queries)
@@ -26,7 +24,6 @@ export default class APIservice {
     }))
   }
 
->>>>>>> b1d0eaf484243eff556bf257e7e3dd8d29fd227d
   static Signup(body) {
     return (fetch('http://127.0.0.1:8000/api/profiles/', {
       method: 'POST',
@@ -54,7 +51,6 @@ export default class APIservice {
     }))
   }
 
-<<<<<<< HEAD
   static EditUser(body, userID, token) {
     userID = 1 //todo
     return (fetch('http://127.0.0.1:8000/api/edit/' + userID, {
@@ -81,7 +77,6 @@ export default class APIservice {
     }))
   }
 
-=======
   static ShowInterest(id, token) {
     return (fetch('http://127.0.0.1:8000/api/listings/'+id+'/show_interest/', {
       method: 'GET',
@@ -93,5 +88,4 @@ export default class APIservice {
       credentials: 'include',
     }))
   }
->>>>>>> b1d0eaf484243eff556bf257e7e3dd8d29fd227d
 }

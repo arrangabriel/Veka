@@ -1,8 +1,9 @@
 import Listing from './Listing';
 import Popup from '../Popup/Popup';
-import { useState, useEffect } from 'react';
+import { useEffect, useState} from 'react';
 import CreateListing from './CreateListing';
 import './ListingView.css'
+import APIservice from '../../APIservice';
 
 
 const ListingView = ({token}) => { 
@@ -15,15 +16,30 @@ const ListingView = ({token}) => {
 
   const [listings, setListings] = useState([])
 
-  useEffect(() => {
-    let params = '?'
+  const [sorting, setSorting] =useState('date')
+  const handleSort = (e)=>{
+    let {name,value}=e.target
+    setSorting(value)
+  }
 
+  const [state, setState] = useState({})
+
+  const handleChangedChx = (e) => {
+    setState(prevState => ({
+      ...prevState,
+      [e.target.id]: e.target.checked
+    }));
+  }
+
+
+  useEffect(()=>{
+    let params='?'
+  
     for(const key in state){
       if(state[key]){
         params += key + '&'
       }
     }
-
     params+='sort='+sorting
     params+='&ignore_self'
 
@@ -39,42 +55,48 @@ const ListingView = ({token}) => {
 
   return (
     <div className='listingPage'>
-      <div className='filterbox container'>
-          <h6>Velg kategori</h6>
-          <input type="checkbox" id="tilsalg" name="tilsalg"></input>
-          <label htmlFor="tilsalg">Til salg</label> <br/>
-          <input type="checkbox" id="onskeskjopt" name="onskeskjopt"></input>
-          <label htmlFor="onskeskjopt">Ønskes kjøpt</label><br/>
-          <br/>
-          <br/>
+      <div className='filterbox'>
+        <h6>Velg kategori</h6>
+        <input type="checkbox" id="listing_type=s" name="tilsalg" onChange ={e => handleChangedChx(e)}></input>
+        <label htmlFor="tilsalg">Til salg</label><br/>
+        <input type="checkbox" id="listing_type=b" name="onskeskjopt" onChange ={e => handleChangedChx(e)}></input>
+        <label htmlFor="onskeskjopt">Ønskes kjøpt</label><br/>
+        <br/>
+        <br/>
+        <h6>Sted</h6>
+        <input type="checkbox" id="location=bergen" name="bergen" onChange ={e => handleChangedChx(e)}></input>
+        <label htmlFor="bergen">Bergen</label><br/>
+        <input type="checkbox" id="location=oslo" name="oslo" onChange ={e => handleChangedChx(e)}></input>
+        <label htmlFor="oslo">Oslo</label><br/>
+        <input type="checkbox" id="location=stavanger" name="stavanger" onChange ={e => handleChangedChx(e)}></input>
+        <label htmlFor="stavanger">Stavanger</label><br/>
+        <input type="checkbox" id="location=trondheim" name="trondheim" onChange ={e => handleChangedChx(e)}></input>
+        <label htmlFor="stavanger">Trondheim</label><br/>
+        <br/>
+        <br/>
+        <h6>Arrangement</h6>
+        <input type="checkbox" id="event_type=c" name="konsert" onChange ={e => handleChangedChx(e)}></input>
+        <label htmlFor="konsert">Konsert</label><br/>
+        <input type="checkbox" id="event_type=t" name="teater" onChange ={e => handleChangedChx(e)}></input>
+        <label htmlFor="teater">Teater</label><br/>
+        <input type="checkbox" id="event_type=f" name="festival" onChange ={e => handleChangedChx(e)}></input>
+        <label htmlFor="festival">Festival</label> <br/>
 
-          <h6>Sted</h6>
-          <input type="checkbox" id="bergen" name="bergen"></input>
-          <label htmlFor="bergen">Bergen</label><br/>
-          <input type="checkbox" id="oslo" name="oslo"></input>
-          <label htmlFor="oslo">Oslo</label><br/>
-          <input type="checkbox" id="stavanger" name="stavanger"></input>
-          <label htmlFor="stavanger">Stavanger</label><br/>
-          <input type="checkbox" id="trondheim" name="trondheim"></input>
-          <label htmlFor="stavanger">Trondheim</label><br/>
-          <br/>
-          <br/>
-          <h6>Arrangement</h6>
-          <input type="checkbox" id="konsert" name="konsert"></input>
-          <label htmlFor="konsert">Konsert</label><br/>
-          <input type="checkbox" id="teater" name="teater"></input>
-          <label htmlFor="teater">Teater</label><br/>
-          <input type="checkbox" id="stavanger" name="festival"></input>
-          <label htmlFor="festival">Festival</label> <br/>
+        <br/>
+        <br/>
+        <h6>Sortering</h6>
+        <select defaultValue="" className="form-select" aria-label="Default select example" onChange={e=>handleSort(e)}>
+          {/* setSorting(e.target.name) */}
+          <option value="date">Dato</option>
+          <option value="-price">Pris Høy-Lav</option>
+          <option value="price">Pris Lav-Høy</option>
+          <option value="-date">Senest først</option>
+        </select>
       </div>
 
       <div className='listingView'>
         {listings.map((listing, index) => (
-<<<<<<< HEAD
-          <Listing key={index} header={listing.title} description={listing.description} publisher={listing.owner} type={listing.type}></Listing>
-=======
           <Listing key={index} header={listing.title} description={listing.description} publisher={listing.username} type={listing.listing_type} id={listing.id}></Listing>
->>>>>>> b1d0eaf484243eff556bf257e7e3dd8d29fd227d
         ))}
       </div>
       {isOpen && <Popup

@@ -47,14 +47,14 @@ const ListingView = () => {
   return (
     <div className='listingPage'>
       <div className='filterbox'>
-        <h6>Velg kategori</h6>
+        <h6>Kategori:</h6>
         <input type="checkbox" id="listing_type=s" name="tilsalg" onChange ={e => handleChangedChx(e)}></input>
         <label htmlFor="tilsalg">Til salg</label><br/>
         <input type="checkbox" id="listing_type=b" name="onskeskjopt" onChange ={e => handleChangedChx(e)}></input>
         <label htmlFor="onskeskjopt">Ønskes kjøpt</label><br/>
         <br/>
         <br/>
-        <h6>Sted</h6>
+        <h6>Sted:</h6>
         <input type="checkbox" id="location=bergen" name="bergen" onChange ={e => handleChangedChx(e)}></input>
         <label htmlFor="bergen">Bergen</label><br/>
         <input type="checkbox" id="location=oslo" name="oslo" onChange ={e => handleChangedChx(e)}></input>
@@ -65,7 +65,7 @@ const ListingView = () => {
         <label htmlFor="stavanger">Trondheim</label><br/>
         <br/>
         <br/>
-        <h6>Arrangement</h6>
+        <h6>Arrangement:</h6>
         <input type="checkbox" id="event_type=c" name="konsert" onChange ={e => handleChangedChx(e)}></input>
         <label htmlFor="konsert">Konsert</label><br/>
         <input type="checkbox" id="event_type=t" name="teater" onChange ={e => handleChangedChx(e)}></input>

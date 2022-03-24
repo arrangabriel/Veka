@@ -16,7 +16,7 @@ const SignUp = () => {
     }
 
     return (
-        <div className="SignUpElements">
+        <div className="siteElements">
             <h3>Registrer bruker</h3>
 
             <div className="form-group">

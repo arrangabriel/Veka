@@ -34,7 +34,7 @@ const UserPost = () => {
             .then(resp => console.log(resp))
     }
     return (
-        <div className='createListingElements'>
+        <div className='siteElements'>
             <h3>Nytt innlegg</h3>
 
             <div className="form-group">

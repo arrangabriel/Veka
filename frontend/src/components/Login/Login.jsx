@@ -23,7 +23,7 @@ const LoginForm = () => {
 
 
   return (
-  <div className='loginElements'>
+  <div className='siteElements'>
     <h3>Logg inn</h3>
 
     <div className="form-group">

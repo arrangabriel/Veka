@@ -6,17 +6,17 @@ import CreateListing from './components/Listing/CreateListing';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState, useEffect } from 'react';
+//import { useState, useEffect } from 'react';
 import React from 'react';
 import ProfilePage from './components/Profile/ProfilePage';
-import {useCookies} from 'react-cookie'
+//import {useCookies} from 'react-cookie'
 
 
 function App() {
 
-  const [token, setToken] = useCookies(['mytoken'])
+  //const [token, setToken] = useCookies(['mytoken'])
 
-   console.log(token)
+  //console.log(token)
   // useEffect(()=>{
   //   fetch('http://127.0.0.1:8000/api/listings/', {
   //     'method':'POST',

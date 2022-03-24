@@ -2,7 +2,6 @@ from rest_framework.test import APITestCase, APIClient
 from django.urls import reverse
 from rest_framework import status
 from utils import create_test_user
-from django.contrib.auth.models import User
 
 
 class ListingTests(APITestCase):

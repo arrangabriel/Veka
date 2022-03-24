@@ -9,8 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import { useState, useEffect } from 'react';
 import React from 'react';
 import ProfilePage from './components/Profile/ProfilePage';
-//import {useCookies} from 'react-cookie'
-
+//import { useCookies } from 'react-cookie'
 
 function App() {
 
@@ -62,16 +61,14 @@ function App() {
 
 
       <Routes>
-        <Route exact path='/' element={<ListingView/>} />
+        <Route exact path='/' element={<ListingView token={token}/>} />
         <Route path="/sign-in" element={<Login/>} />
         <Route path="/sign-up" element={<SignUp/>} />
         <Route path="/sign-up#" element={<Login/>} />
         <Route path="/add-post" element={<CreateListing/>} />
-        <Route path="/my-user" element={<ProfilePage/>} />
-
+        <Route path="/my-user" element={<ProfilePage token={token}/>} />
       </Routes>
-          
-    </div>
+      </div>
     </Router>
   );
 }

@@ -1,11 +1,12 @@
 import Listing from './Listing';
 import Popup from '../Popup/Popup';
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import CreateListing from './CreateListing';
 import './ListingView.css'
 import APIservice from '../../APIservice';
 
-const ListingView = () => {
+
+const ListingView = ({token}) => { 
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,32 +16,44 @@ const ListingView = () => {
 
   const [listings, setListings] = useState([])
 
-  APIservice.getListings('')
-  .then(resp=>resp.json())
-  .then(resp=>setListings(resp))
-  .then(error=>console.log(error))
+  const [sorting, setSorting] =useState('date')
+  const handleSort = (e)=>{
+    let {name,value}=e.target
+    setSorting(value)
+  }
+  const [state, setState] = useState({})
 
-  let state = {
-  };
-  
   const handleChangedChx = (e) => {
-    state[e.target.id] = e.target.checked
-    console.log(state)
+    setState(prevState => ({
+      ...prevState,
+      [e.target.id]: e.target.checked
+    }));
+  }
+
+  const [update,setUpdate]=useState(true)
+  const handleInterest=()=>{
+    setUpdate(!update)
+  }
+
+
+  useEffect(()=>{
     let params='?'
-    
+  
     for(const key in state){
-      console.log(state[key])
       if(state[key]){
         params += key + '&'
       }
     }
-  
-    console.log(params)
-    APIservice.getListings(params)
+    params+='sort='+sorting
+    params+='&ignore_self'
+
+    APIservice.getListings(params,token)
     .then(resp=>resp.json())
     .then(resp=>setListings(resp))
-    .then(error=>console.log(error))
-  }
+  },[state,sorting,token,update]
+  )
+  
+  
   
 
 
@@ -72,13 +85,25 @@ const ListingView = () => {
         <label htmlFor="teater">Teater</label><br/>
         <input type="checkbox" id="event_type=f" name="festival" onChange ={e => handleChangedChx(e)}></input>
         <label htmlFor="festival">Festival</label> <br/>
+
+        <br/>
+        <br/>
+        <h6>Sortering</h6>
+        <select defaultValue="" className="form-select" aria-label="Default select example" onChange={e=>handleSort(e)}>
+          {/* setSorting(e.target.name) */}
+          <option value="date">Dato</option>
+          <option value="-price">Pris Høy-Lav</option>
+          <option value="price">Pris Lav-Høy</option>
+          <option value="-date">Senest først</option>
+        </select>
       </div>
 
       <div className='listingView'>
         {listings.map((listing, index) => (
-          <Listing key={index} header={listing.title} description={listing.description} publisher={listing.owner} type={listing.type}></Listing>
+          <Listing key={index} header={listing.title} description={listing.description} publisher={listing.username} type={listing.listing_type} id={listing.id} interested={listing.interested} setListings={handleInterest}></Listing>
         ))}
       </div>
+
       {isOpen && <Popup
         content={<>
           <CreateListing></CreateListing>

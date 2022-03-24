@@ -3,9 +3,7 @@ import { useState, useEffect } from 'react';
 import Listing from './Listing';
 
 
-const ListingHandler = (userID) => {
-
-  userID = 1
+const ListingHandler = () => {
 
   const [listings, setListings] = useState([])
 

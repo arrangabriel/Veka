@@ -48,9 +48,8 @@ const ProfilePage = ({token}) => {
 
   return (
     <div>
-      <Profile user={profile.user} first_name={profile.first_name} last_name={profile.last_name} bio={profile.bio} location={profile.location} avatar="blank_profile"></Profile>
-      <h1>{userID}</h1>
-      <MyOwnListingsHandler userID={userID} token={token}></MyOwnListingsHandler>
+      <Profile user={profile.user} first_name={profile.first_name} last_name={profile.last_name} bio={profile.bio} location={profile.location} avatar="blank_profile" token={token} userID={userID}></Profile>
+      <MyOwnListingsHandler></MyOwnListingsHandler>
     </div>
   )
 }

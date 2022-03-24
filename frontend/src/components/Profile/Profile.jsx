@@ -6,7 +6,7 @@ import EditProfile from './EditProfile'
 import Popup from '../Popup/Popup'
 
 
-const Profile = ({ first_name, last_name, bio, user, avatar, location }) => {
+const Profile = ({ first_name, last_name, bio, user, avatar, location, userID, token }) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -41,7 +41,7 @@ const Profile = ({ first_name, last_name, bio, user, avatar, location }) => {
             </div>
             {isOpen && <Popup
                 content={<>
-                    <EditProfile></EditProfile>
+                    <EditProfile token={token} userID={userID}></EditProfile>
                 </>}
                 handleClose={togglePopup}
             />}

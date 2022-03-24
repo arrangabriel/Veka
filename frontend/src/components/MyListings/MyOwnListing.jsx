@@ -3,8 +3,10 @@ import './MyOwnListing.css';
 import fest from './img/fest.jpg'
 import APIservice from '../../APIservice';
 import {useCookies} from "react-cookie";
+import Popup from '../Popup/Popup';
+import { useState } from 'react';
 
-const MyOwnListing = ({header,date,description,img,publisher,type, id}) => {
+const MyOwnListing = ({header,date,description,img,publisher,type, id, interestedUsers}) => {
 
     const [cookies, setCookies] = useCookies()
 
@@ -12,8 +14,14 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id}) => {
         APIservice.SetAsSold(id, cookies)
     }
 
-  return (
-  <div className="container bcontent">
+    const [isOpen, setIsOpen] = useState(false);
+
+    const togglePopup = () => {
+        setIsOpen(!isOpen);
+    }
+
+    return (
+    <div className="container bcontent">
         <div className="card"> 
             <div className="row no-gutters">
                 <div className="col-sm">
@@ -30,7 +38,7 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id}) => {
                 <div className='listingButtonsDiv col-sm-3'>
                     <div className='container'>
                         <div className='row justify-content-end no-gutters'>
-                            <button className="btn btn-primary">Vis intersserte</button>
+                            <button className="btn btn-primary" onClick={togglePopup}>Vis intersserte</button>
                         </div>
                         <div className='row justify-content-end'>
                             <button value={id} className="btn btn-primary" onClick={e=>handleSold(e.target.value)}>Marker som solgt</button>
@@ -38,6 +46,12 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id}) => {
                     </div>
                 </div>
             </div>
+            {isOpen && <Popup
+                content={<>
+                <h1>{interestedUsers}</h1>
+                </>}
+                handleClose={togglePopup}
+            />}
         </div>
     </div>
   )

@@ -15,6 +15,11 @@ const EditProfile = ({userID, token}) => {
     const editUser = () => {
 
         let body = {
+            user:{
+                username: 'admin',
+                email:'admin@sjef.no',
+                password: 'admin'
+            },
             first_name: firstName,
             last_name: LastName,
             bio: bio,

@@ -112,7 +112,7 @@ class ListingViewSet(MultiSerializerViewSet):
                 if request.user.id != listing['owner']['id']:
                     del listing['interested_users']
             else:
-                del listing['interested_user']
+                del listing['interested_users']
         return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):

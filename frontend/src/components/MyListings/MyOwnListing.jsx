@@ -1,20 +1,16 @@
 import React from 'react'
-import './Listing.css';
+import './MyOwnListing.css';
 import fest from './img/fest.jpg'
 import APIservice from '../../APIservice';
-import { useCookies } from "react-cookie";
-import { useState } from 'react';
-import ListingView from './ListingView';
+import {useCookies} from "react-cookie";
 
-const Listing = ({header,date,description,img,publisher,type,id,interested,setListings}) => {
+const MyOwnListing = ({header,date,description,img,publisher,type, id}) => {
 
     const [cookies, setCookies] = useCookies()
 
-    const handleShowInterest= (id)=>{
-        APIservice.ShowInterest(id,cookies)
-        setListings()
+    const handleSold = (id) => {
+        APIservice.SetAsSold(id, cookies)
     }
-
 
   return (
   <div className="container bcontent">
@@ -34,13 +30,10 @@ const Listing = ({header,date,description,img,publisher,type,id,interested,setLi
                 <div className='listingButtonsDiv col-sm-3'>
                     <div className='container'>
                         <div className='row justify-content-end no-gutters'>
-                            <button className="btn btn-primary">Besøk bruker</button>
+                            <button className="btn btn-primary">Vis intersserte</button>
                         </div>
                         <div className='row justify-content-end'>
-                            {interested==='true'
-                                ?<button value={id} className="btn btn-secondary" disabled>Interesse vist</button>
-                                :<button value={id} className="btn btn-primary" onClick={e=>handleShowInterest(e.target.value)}>Meld interesse</button>
-                            }
+                            <button value={id} className="btn btn-primary" onClick={e=>handleSold(e.target.value)}>Marker som solgt</button>
                         </div>
                     </div>
                 </div>
@@ -50,4 +43,4 @@ const Listing = ({header,date,description,img,publisher,type,id,interested,setLi
   )
 }
 
-export default Listing 
+export default MyOwnListing 

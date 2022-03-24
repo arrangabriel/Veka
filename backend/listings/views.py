@@ -1,3 +1,4 @@
+from urllib import request
 from .serializers import ListingReadSerializer, ListingWriteSerializer
 from .models import Listing, Profile
 from rest_framework import viewsets
@@ -35,9 +36,11 @@ class ListingViewSet(MultiSerializerViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-        if self.action == 'list' or self.action == 'metadata' or self.action == 'retrieve':
+        any = ['list', 'metadata', 'retrieve', 'interested']
+        authenticated = ['create', 'show_interest']
+        if self.action in any:
             permission_classes = [AllowAny]
-        elif self.action == 'create':
+        elif self.action in authenticated:
             permission_classes = [IsAuthenticated]
         else:
             permission_classes = [IsAdminUser]
@@ -45,7 +48,7 @@ class ListingViewSet(MultiSerializerViewSet):
 
     model = Listing
     context_object_name = 'listings'
-    #queryset = Listing.objects.all()
+    queryset = Listing.objects.all()
     valid_orderings = (
         'date',
         'price',
@@ -62,6 +65,7 @@ class ListingViewSet(MultiSerializerViewSet):
         # The names of these parameters are mirrors of the database attributes
         # Possible options can be found in listings/models.py
         user = params.get('user')
+        ignore_self = params.get('ignore_self')
         listing_type = params.getlist('listing_type')
         event_type = params.getlist('event_type')
         location = params.getlist('location')
@@ -76,6 +80,9 @@ class ListingViewSet(MultiSerializerViewSet):
         if user is not None:
             queryset = queryset.filter(owner__id=user)
 
+        if ignore_self is not None:
+            queryset = queryset.exclude(owner__id=self.request.user.id)
+
         if listing_type:
             queryset = queryset.filter(listing_type__in=listing_type)
 
@@ -86,6 +93,42 @@ class ListingViewSet(MultiSerializerViewSet):
             queryset = queryset.filter(location__in=location)
 
         return queryset
+
+    def list(self, request):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        for listing in serializer.data:
+            listing['interested'] = 'false'
+            if request.user.is_authenticated:
+                if request.user.id in listing['interested_users']:
+                    listing['interested'] = 'true'
+                # remove interested users field if user is not the listing owner
+                if request.user.id != listing['owner']['id']:
+                    del listing['interested_users']
+            else:
+                del listing['interested_users']
+        return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        listing = serializer.data
+        listing['interested'] = 'false'
+        if request.user.is_authenticated:
+            if request.user.id in listing['interested_users']:
+                listing['interested'] = 'true'
+                # remove interested users field if user is not the listing owner
+            if request.user.id != listing['owner']['id']:
+                del listing['interested_users']
+        else:
+            del listing['interested_user']
+        return Response(listing)
 
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -98,7 +141,7 @@ class ListingViewSet(MultiSerializerViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     # TODO figure out IsAdminOrIsSelf: https://www.django-rest-framework.org/api-guide/routers/
-    @action(methods=['get'], detail=True, permission_classes=[IsAuthenticated])
+    @action(methods=['get'], detail=True)
     def show_interest(self, request, pk=None):
         listing = self.queryset.get(id=pk)
         if listing.owner.user.id == request.user.id:
@@ -109,12 +152,12 @@ class ListingViewSet(MultiSerializerViewSet):
         return Response(data='Interest shown succesfully!', status=status.HTTP_200_OK)
 
     # get interested users
-    @action(methods=['get'], detail=True, permission_classes=[IsAuthenticated])
+    @action(methods=['get'], detail=True)
     def interested(self, request, pk=None):
         listing = self.queryset.get(id=pk)
         # uses username, but they are unique, so that's fine
-        if listing.owner.user != request.user:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        if (listing.owner.user != request.user) and not request.user.is_staff:
+            return Response(data='Listing not owned by user', status=status.HTTP_401_UNAUTHORIZED)
         interested = listing.interested_users.all()
         interested_dict = {
             key.id: key.user.username for key in interested

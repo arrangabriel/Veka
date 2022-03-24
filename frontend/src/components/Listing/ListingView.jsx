@@ -6,7 +6,7 @@ import './ListingView.css'
 import APIservice from '../../APIservice';
 
 
-const ListingView = () => { 
+const ListingView = ({token}) => { 
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,7 +21,6 @@ const ListingView = () => {
     let {name,value}=e.target
     setSorting(value)
   }
-
   const [state, setState] = useState({})
 
   const handleChangedChx = (e) => {
@@ -29,6 +28,11 @@ const ListingView = () => {
       ...prevState,
       [e.target.id]: e.target.checked
     }));
+  }
+
+  const [update,setUpdate]=useState(true)
+  const handleInterest=()=>{
+    setUpdate(!update)
   }
 
 
@@ -41,11 +45,12 @@ const ListingView = () => {
       }
     }
     params+='sort='+sorting
+    params+='&ignore_self'
 
-    APIservice.getListings(params)
+    APIservice.getListings(params,token)
     .then(resp=>resp.json())
     .then(resp=>setListings(resp))
-  },[state,sorting]
+  },[state,sorting,token,update]
   )
   
   
@@ -95,9 +100,10 @@ const ListingView = () => {
 
       <div className='listingView'>
         {listings.map((listing, index) => (
-          <Listing key={index} header={listing.title} description={listing.description} publisher={listing.username} type={listing.listing_type}></Listing>
+          <Listing key={index} header={listing.title} description={listing.description} publisher={listing.username} type={listing.listing_type} id={listing.id} interested={listing.interested} setListings={handleInterest}></Listing>
         ))}
       </div>
+
       {isOpen && <Popup
         content={<>
           <CreateListing></CreateListing>

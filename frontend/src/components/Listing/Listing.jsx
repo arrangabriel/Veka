@@ -1,8 +1,21 @@
 import React from 'react'
 import './Listing.css';
 import fest from './img/fest.jpg'
+import APIservice from '../../APIservice';
+import { useCookies } from "react-cookie";
+import { useState } from 'react';
+import ListingView from './ListingView';
 
-const Listing = ({header,date,description,img,publisher,type}) => {
+const Listing = ({header,date,description,img,publisher,type,id,interested,setListings}) => {
+
+    const [cookies, setCookies] = useCookies()
+
+    const handleShowInterest= (id)=>{
+        APIservice.ShowInterest(id,cookies)
+        setListings()
+    }
+
+
   return (
   <div className="container bcontent">
         <div className="card"> 
@@ -24,7 +37,10 @@ const Listing = ({header,date,description,img,publisher,type}) => {
                             <button className="btn btn-primary">Besøk bruker</button>
                         </div>
                         <div className='row justify-content-end'>
-                            <button className="btn btn-primary">Meld interesse</button>
+                            {interested==='true'
+                                ?<button value={id} className="btn btn-secondary" disabled>Interesse vist</button>
+                                :<button value={id} className="btn btn-primary" onClick={e=>handleShowInterest(e.target.value)}>Meld interesse</button>
+                            }
                         </div>
                     </div>
                 </div>

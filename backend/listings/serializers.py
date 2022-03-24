@@ -4,14 +4,14 @@ from .models import Listing
 
 
 class ListingReadSerializer(serializers.ModelSerializer):
-    #owner = ProfileSerializer()
     username = serializers.ReadOnlyField(source='owner.user.username')
+    interested_users = serializers.SlugRelatedField(
+        many=True, read_only=True, slug_field='id')
 
     class Meta:
         model = Listing
-        # TODO this needs to return ID
         fields = ('id', 'owner', 'username', 'title', 'description',
-                  'date', 'location', 'listing_type', 'event_type', 'price')
+                  'date', 'location', 'listing_type', 'event_type', 'price', 'amount', 'interested_users')
         depth = 1
 
 
@@ -19,4 +19,4 @@ class ListingWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
         fields = ('title', 'description', 'date', 'location',
-                  'listing_type', 'event_type', 'price')
+                  'listing_type', 'event_type', 'amount', 'price')

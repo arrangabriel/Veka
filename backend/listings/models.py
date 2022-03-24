@@ -39,6 +39,7 @@ class Listing(models.Model):
     listing_type = models.CharField(max_length=1, choices=listingType.choices)
     event_type = models.CharField(max_length=2, choices=eventType.choices)
     complete = models.BooleanField(default=False)
+    amount = models.PositiveIntegerField(default=1)
     # maybe add a max value
     price = models.PositiveBigIntegerField()
     interested_users = models.ManyToManyField(

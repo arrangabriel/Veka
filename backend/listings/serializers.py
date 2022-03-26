@@ -11,7 +11,7 @@ class ListingReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
         fields = ('id', 'owner', 'username', 'title', 'description',
-                  'date', 'location', 'listing_type', 'event_type', 'price', 'amount', 'interested_users')
+                  'date', 'location', 'listing_type', 'event_type', 'price', 'amount', 'sold', 'interested_users')
         depth = 1
 
 

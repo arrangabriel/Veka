@@ -166,4 +166,7 @@ class ListingViewSet(MultiSerializerViewSet):
 
     @action(methods=['get'], detail=True)
     def mark_sold(self, request, pk=None):
-        pass
+        listing = self.queryset.get(id=pk)
+        listing.sold = True
+        listing.save()
+        return Response(status=status.HTTP_200_OK)

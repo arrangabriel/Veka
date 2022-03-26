@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -11,6 +12,10 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
 
+    @property
+    def rating(self):
+        pass
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -21,3 +26,10 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+class Rating(models.Model):
+    reviewer = models.ForeignKey(
+        User, on_delete=models.SET_NULL, related_name='reviewer', null=True)
+    reviewee = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='reviewee')

@@ -64,32 +64,6 @@ class ProfilesViewSet(MultiSerializerViewSet):
         return Response(str(profile), status=status.HTTP_200_OK)
 
 
-class LoginViewSet(viewsets.ModelViewSet):
-
-    def get_permissions(self):
-        """
-        Instantiates and returns the list of permissions that this view requires.
-        """
-        if self.action == 'create' or self.action == 'list':
-            permission_classes = [AllowAny]
-        else:
-            permission_classes = [IsAuthenticated]
-        return [permission() for permission in permission_classes]
-
-    serializer_class = LoginSerializer
-    queryset = User.objects.all()
-
-    def create(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            return Response(status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-
 class LogoutViewSet(viewsets.ViewSet):
 
     def create(self, request):

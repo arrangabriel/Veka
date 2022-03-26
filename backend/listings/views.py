@@ -163,3 +163,7 @@ class ListingViewSet(MultiSerializerViewSet):
             key.id: key.user.username for key in interested
         }
         return Response(data=interested_dict, status=status.HTTP_200_OK)
+
+    @action(methods=['get'], detail=True)
+    def mark_sold(self, request, pk=None):
+        pass

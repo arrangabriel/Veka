@@ -17,6 +17,12 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ('user', 'first_name', 'last_name', 'bio', 'location')
 
 
+class UpdateProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('first_name', 'last_name', 'bio', 'location')
+
+
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()

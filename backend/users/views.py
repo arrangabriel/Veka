@@ -1,4 +1,4 @@
-from .serializers import ProfileSerializer, UserSerializer, LoginSerializer
+from .serializers import ProfileSerializer, UpdateProfileSerializer, UserSerializer, LoginSerializer
 from .models import Profile
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -21,13 +21,13 @@ class MultiSerializerViewSet(viewsets.ModelViewSet):
 
 
 class ProfilesViewSet(MultiSerializerViewSet):
-
     queryset = Profile.objects.all()
 
     serializers = {
         'create': UserSerializer,
         'list': ProfileSerializer,
         'retrieve': ProfileSerializer,
+        'update': UpdateProfileSerializer,
         'default': UserSerializer,
         'metadata': ProfileSerializer
     }

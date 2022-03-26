@@ -1,13 +1,13 @@
 from .serializers import ProfileSerializer, UpdateProfileSerializer, UserSerializer, LoginSerializer
 from .models import Profile
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from rest_framework import status, viewsets
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.decorators import action
 
 
 class MultiSerializerViewSet(viewsets.ModelViewSet):
@@ -36,8 +36,11 @@ class ProfilesViewSet(MultiSerializerViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
+        print(self.action)
         if self.action == 'list' or self.action == 'create' or self.action == 'metadata':
             permission_classes = [AllowAny]
+        elif self.action == 'me' or self.action == 'retrieve':
+            permission_classes = [IsAuthenticated]
         else:
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
@@ -53,6 +56,13 @@ class ProfilesViewSet(MultiSerializerViewSet):
         except IntegrityError as e:
             return Response(e.args, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(methods=['get'], detail=False, permission_classes=[IsAuthenticated])
+    def me(self, request):
+        profile = request.user.id
+        if not profile:
+            return Response(data='Could not find a logged in profile', status=status.HTTP_403_FORBIDDEN)
+        return Response(str(profile), status=status.HTTP_200_OK)
+
 
 class LoginViewSet(viewsets.ModelViewSet):
 
@@ -60,10 +70,10 @@ class LoginViewSet(viewsets.ModelViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-        if self.action == 'create':
+        if self.action == 'create' or self.action == 'list':
             permission_classes = [AllowAny]
         else:
-            permission_classes = [IsAdminUser]
+            permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
 
     serializer_class = LoginSerializer
@@ -104,7 +114,14 @@ class EditViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
-    def create(self, request):
+    def update(self, request, pk):
+
+        requestUser = request.data.get('user.username')
+        loggedInUser = request.user.username
+
+        if (requestUser != loggedInUser):
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
         bio = request.data.get('bio')
         location = request.data.get('location')
         first_name = request.data.get('first_name')

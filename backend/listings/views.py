@@ -24,7 +24,6 @@ class ListingViewSet(viewsets.ModelViewSet):
     )
     any = ['list', 'metadata', 'retrieve']
     authenticated = ['create', 'show_interest', 'mark_sold']
-    # Use to set permissions for operations
 
     def get_permissions(self):
         """
@@ -84,6 +83,9 @@ class ListingViewSet(viewsets.ModelViewSet):
         return queryset
 
     def list(self, request):
+        """
+        Listing list view.
+        """
         queryset = self.filter_queryset(self.get_queryset())
 
         page = self.paginate_queryset(queryset)
@@ -97,6 +99,9 @@ class ListingViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
+        """
+        Listing detail view.
+        """
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         listing = serializer.data
@@ -104,6 +109,9 @@ class ListingViewSet(viewsets.ModelViewSet):
         return Response(listing)
 
     def create(self, request):
+        """
+        Create listing view.
+        """
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         # user id should always be valid, as create is only allowed when authenticated
@@ -116,6 +124,9 @@ class ListingViewSet(viewsets.ModelViewSet):
     # TODO figure out IsAdminOrIsSelf: https://www.django-rest-framework.org/api-guide/routers/
     @action(methods=['get'], detail=True)
     def show_interest(self, request, pk=None):
+        """
+        Show interest view.
+        """
         listing = self.queryset.get(id=pk)
         if listing.owner.user.id == request.user.id:
             return Response(data='Cannot show interest in ones own listing!', status=status.HTTP_403_FORBIDDEN)
@@ -126,6 +137,9 @@ class ListingViewSet(viewsets.ModelViewSet):
 
     @action(methods=['get'], detail=True)
     def mark_sold(self, request, pk=None):
+        """
+        Mark-as-sold view.
+        """
         listing = self.queryset.get(id=pk)
         listing.sold = True
         listing.save()

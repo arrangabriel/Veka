@@ -22,7 +22,7 @@ class ListingViewSet(viewsets.ModelViewSet):
         '-date',
         '-price',
     )
-    any = ['list', 'metadata', 'retrieve', 'interested']
+    any = ['list', 'metadata', 'retrieve']
     authenticated = ['create', 'show_interest', 'mark_sold']
     # Use to set permissions for operations
 
@@ -75,6 +75,7 @@ class ListingViewSet(viewsets.ModelViewSet):
         return queryset
 
     # TODO refactor interested query
+
     def list(self, request):
         queryset = self.filter_queryset(self.get_queryset())
 
@@ -131,19 +132,6 @@ class ListingViewSet(viewsets.ModelViewSet):
             user=request.user.id)
         )
         return Response(data='Interest shown succesfully!', status=status.HTTP_200_OK)
-
-    # get interested users
-    @action(methods=['get'], detail=True)
-    def interested(self, request, pk=None):
-        listing = self.queryset.get(id=pk)
-        # uses username, but they are unique, so that's fine
-        if (listing.owner.user != request.user) and not request.user.is_staff:
-            return Response(data='Listing not owned by user', status=status.HTTP_401_UNAUTHORIZED)
-        interested = listing.interested_users.all()
-        interested_dict = {
-            key.id: key.user.username for key in interested
-        }
-        return Response(data=interested_dict, status=status.HTTP_200_OK)
 
     @action(methods=['get'], detail=True)
     def mark_sold(self, request, pk=None):

@@ -65,7 +65,6 @@ export default class APIservice {
   }
 
   static getUser(userID, token){
-    console.log("FETCHING from: http://127.0.0.1:8000/api/profiles/" + userID)
     return(fetch('http://127.0.0.1:8000/api/profiles/'+ userID + '/', {
       'method': 'GET',
       headers: {

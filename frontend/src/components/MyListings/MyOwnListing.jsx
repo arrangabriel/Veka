@@ -3,17 +3,36 @@ import './MyOwnListing.css';
 import fest from './img/fest.jpg'
 import APIservice from '../../APIservice';
 import {useCookies} from "react-cookie";
+import Popup from '../Popup/Popup';
+import { useState } from 'react';
 
-const MyOwnListing = ({header,date,description,img,publisher,type, id}) => {
+const MyOwnListing = ({header,date,description,img,publisher,type, id, interestedUsers}) => {
 
     const [cookies, setCookies] = useCookies()
+    const [interestedProfiles, setInterestedProfiles] = useState([])
 
     const handleSold = (id) => {
         APIservice.SetAsSold(id, cookies)
     }
 
-  return (
-  <div className="container bcontent">
+    const getInterestedUser = (interestedUsers, token) => {
+        setInterestedProfiles([])    
+        interestedUsers.map((interestedUser) => (
+            APIservice.getUser(interestedUser, token)
+            .then(resp=>resp.json())
+            .then(resp=>setInterestedProfiles(oldArray => [...oldArray, resp]))
+        ))
+    }
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const togglePopup = () => {
+        setIsOpen(!isOpen);
+        getInterestedUser(interestedUsers, cookies);
+    }
+
+    return (
+    <div className="container bcontent">
         <div className="card"> 
             <div className="row no-gutters">
                 <div className="col-sm">
@@ -30,7 +49,7 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id}) => {
                 <div className='listingButtonsDiv col-sm-3'>
                     <div className='container'>
                         <div className='row justify-content-end no-gutters'>
-                            <button className="btn btn-primary">Vis intersserte</button>
+                            <button className="btn btn-primary" onClick={togglePopup}>Vis interesserte</button>
                         </div>
                         <div className='row justify-content-end'>
                             <button value={id} className="btn btn-primary" onClick={e=>handleSold(e.target.value)}>Marker som solgt</button>
@@ -38,6 +57,20 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id}) => {
                     </div>
                 </div>
             </div>
+            {isOpen && <Popup
+                content={<>
+                <h2>Interesserte brukere</h2>
+                {Object.keys(interestedProfiles).length === 0
+                    ?<h4>Ingen brukere interessert</h4>
+                    :<>
+                    {interestedProfiles.map((profile, index)=> (
+                            <h4 key={index}>Brukernavn: {profile.user.username}  Email: {profile.user.email}</h4>
+                        ))}
+                </>
+                }
+                </>}
+                handleClose={togglePopup}
+            />}
         </div>
     </div>
   )

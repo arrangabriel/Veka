@@ -6,6 +6,7 @@ import MyOwnListing from './MyOwnListing';
 const MyOwnListingsHandler = ({userID}) => {
 
   const [MyListings, setMyListings] = useState([])
+  console.log(MyListings)
 
   useEffect(() => {
     let url = 'http://127.0.0.1:8000/api/listings/?user=' + userID

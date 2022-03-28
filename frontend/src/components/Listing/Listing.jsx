@@ -5,14 +5,26 @@ import APIservice from '../../APIservice';
 import { useCookies } from "react-cookie";
 import { useState } from 'react';
 import ListingView from './ListingView';
+import Popup from '../Popup/Popup';
+import UserProfile from '../Profile/UserProfile';
 
-const Listing = ({header,date,description,img,publisher,type,id,interested,setListings}) => {
+const Listing = ({header,date,description,img,publisher,type,id,interested,setListings,owner}) => {
 
     const [cookies, setCookies] = useCookies()
 
     const handleShowInterest= (id)=>{
         APIservice.ShowInterest(id,cookies)
         setListings()
+    }
+
+    const handleVisitOwner=(ownerId)=>{
+        togglePopup();
+    }
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const togglePopup = () => {
+        setIsOpen(!isOpen);
     }
 
 
@@ -34,18 +46,26 @@ const Listing = ({header,date,description,img,publisher,type,id,interested,setLi
                 <div className='listingButtonsDiv col-sm-3'>
                     <div className='container'>
                         <div className='row justify-content-end no-gutters'>
-                            <button className="btn btn-primary">Besøk bruker</button>
+                            <button value={owner} className="btn btn-primary" onClick={e=>handleVisitOwner(e.target.value)}>Besøk bruker</button>
                         </div>
                         <div className='row justify-content-end'>
                             {interested==='true'
-                                ?<button value={id} className="btn btn-secondary" disabled>Interesse vist</button>
-                                :<button value={id} className="btn btn-primary" onClick={e=>handleShowInterest(e.target.value)}>Meld interesse</button>
+                                ?<button value={id} className="btn btn-success" disabled>Interesse vist</button>
+                                :<button value={id} className="btn btn-success" onClick={e=>handleShowInterest(e.target.value)}>Meld interesse</button>
                             }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        {isOpen && <Popup
+        content={<>
+          <UserProfile ownerId={owner} togglePopup={togglePopup}></UserProfile>
+        </>}
+        handleClose={togglePopup}
+      />}
+
     </div>
   )
 }

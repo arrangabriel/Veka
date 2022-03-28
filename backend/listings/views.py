@@ -38,10 +38,26 @@ class ListingViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
+    def sanitize_listing(self, request_user, listing):
+        """
+        Removes interested users from listings if request_user is not admin or the listing owner.
+        """
+        listing['interested'] = 'false'
+        if request_user.is_authenticated:
+            if request_user.id in listing['interested_users']:
+                listing['interested'] = 'true'
+                # remove interested users field if user is not the listing owner
+            if request_user.id != listing['owner']['id'] or request_user.is_superuser:
+                del listing['interested_users']
+        else:
+            del listing['interested_users']
+
     def get_queryset(self):
+        """
+        Sort and filter queryset by GET request parameters.
+        """
         queryset = Listing.objects.all()
         params = self.request.query_params
-
         # The names of these parameters are mirrors of the database attributes
         # Possible options can be found in listings/models.py
         user = params.get('user')
@@ -49,32 +65,23 @@ class ListingViewSet(viewsets.ModelViewSet):
         listing_type = params.getlist('listing_type')
         event_type = params.getlist('event_type')
         location = params.getlist('location')
-        sort = params.get('sort')  # prefix value with - to sort descending
-
+        sort = params.get('sort')
         # default order
         if sort is None or sort not in self.valid_orderings:
             sort = 'date'
 
         queryset = queryset.order_by(sort)
-
         if user is not None:
             queryset = queryset.filter(owner__id=user)
-
         if ignore_self is not None:
             queryset = queryset.exclude(owner__id=self.request.user.id)
-
         if listing_type:
             queryset = queryset.filter(listing_type__in=listing_type)
-
         if event_type:
             queryset = queryset.filter(event_type__in=event_type)
-
         if location:
             queryset = queryset.filter(location__in=location)
-
         return queryset
-
-    # TODO refactor interested query
 
     def list(self, request):
         queryset = self.filter_queryset(self.get_queryset())
@@ -86,30 +93,14 @@ class ListingViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         for listing in serializer.data:
-            listing['interested'] = 'false'
-            if request.user.is_authenticated:
-                if request.user.id in listing['interested_users']:
-                    listing['interested'] = 'true'
-                # remove interested users field if user is not the listing owner
-                if request.user.id != listing['owner']['id']:
-                    del listing['interested_users']
-            else:
-                del listing['interested_users']
+            self.sanitize_listing(request.user, listing)
         return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         listing = serializer.data
-        listing['interested'] = 'false'
-        if request.user.is_authenticated:
-            if request.user.id in listing['interested_users']:
-                listing['interested'] = 'true'
-                # remove interested users field if user is not the listing owner
-            if request.user.id != listing['owner']['id']:
-                del listing['interested_users']
-        else:
-            del listing['interested_user']
+        self.sanitize_listing(request.user, listing)
         return Response(listing)
 
     def create(self, request):

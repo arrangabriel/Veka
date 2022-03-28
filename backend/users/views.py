@@ -21,8 +21,10 @@ class MultiSerializerViewSet(viewsets.ModelViewSet):
 
 
 class ProfilesViewSet(MultiSerializerViewSet):
+    """
+    Profile viewset.
+    """
     queryset = Profile.objects.all()
-
     serializers = {
         'create': UserSerializer,
         'list': ProfileSerializer,
@@ -31,16 +33,16 @@ class ProfilesViewSet(MultiSerializerViewSet):
         'metadata': ProfileSerializer,
         'default': UserSerializer,
     }
+    any = ['list', 'retrieve', 'create', 'metadata']
+    authenticated = ['me', 'update']
 
     def get_permissions(self):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-        any = ['list', 'retrieve', 'create', 'metadata']
-        authenticated = ['me', 'update']
-        if self.action in any:
+        if self.action in self.any:
             permission_classes = [AllowAny]
-        elif self.action in authenticated:
+        elif self.action in self.authenticated:
             permission_classes = [IsAuthenticated]
         else:
             permission_classes = [IsAdminUser]
@@ -83,50 +85,3 @@ class LogoutViewSet(viewsets.ViewSet):
     def create(self, request):
         logout(request)
         return Response(status=status.HTTP_200_OK)
-
-
-class EditViewSet(viewsets.ModelViewSet):
-
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-
-    def get_permissions(self):
-        """
-        Instantiates and returns the list of permissions that this view requires.
-        """
-        if self.action == 'list':
-            permission_classes = [AllowAny]
-        elif self.action == 'create':
-            permission_classes = [IsAuthenticated]
-        else:
-            permission_classes = [IsAdminUser]
-        return [permission() for permission in permission_classes]
-
-    def update(self, request, pk):
-
-        requestUser = request.data.get('user.username')
-        loggedInUser = request.user.username
-
-        if (requestUser != loggedInUser):
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        bio = request.data.get('bio')
-        location = request.data.get('location')
-        first_name = request.data.get('first_name')
-        last_name = request.data.get('last_name')
-        if request.user.is_authenticated:
-            profile = Profile.objects.get(user=request.user.id)
-            if (bio):
-                profile.bio = bio
-            if (location):
-                profile.location = location
-            if (first_name):
-                profile.first_name = first_name
-            if (last_name):
-                profile.last_name = last_name
-            try:
-                profile.full_clean()
-                profile.save()
-                return Response(status=status.HTTP_200_OK)
-            except ValidationError:
-                return Response(status=status.HTTP_400_BAD_REQUEST)

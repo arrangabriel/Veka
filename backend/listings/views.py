@@ -75,8 +75,6 @@ class ListingViewSet(MultiSerializerViewSet):
         location = params.getlist('location')
         sort = params.get('sort')  # prefix value with - to sort descending
 
-        print(listing_type)
-
         # default order
         if sort is None or sort not in self.valid_orderings:
             sort = 'date'

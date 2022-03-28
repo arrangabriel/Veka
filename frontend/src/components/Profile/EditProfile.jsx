@@ -10,23 +10,15 @@ const EditProfile = ({userID, token}) => {
     const [LastName, setLastName] = useState('');
     const [bio, setBio] = useState('');
     const [location, setLocation] = useState('');
-
     
     const editUser = () => {
 
         let body = {
-            user:{
-                username: 'admin',
-                email:'admin@sjef.no',
-                password: 'admin'
-            },
             first_name: firstName,
             last_name: LastName,
             bio: bio,
             location: location
-
         }
-
 
         APIservice.EditUser(body, userID, token)
         .then(resp => console.log(resp))

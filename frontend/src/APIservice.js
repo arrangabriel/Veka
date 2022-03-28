@@ -52,16 +52,16 @@ export default class APIservice {
   }
 
   static EditUser(body, userID, token) {
-    return (fetch('http://127.0.0.1:8000/api/edit/' + userID, {
-      method: 'PUT',
+    return fetch("http://127.0.0.1:8000/api/profiles/" + userID, {
+      method: "PUT",
       headers: {
-        Accept: 'application/json',
-        'Authorization': 'Token ' + token,
-        'Content-type': 'application/json',
+        Accept: "application/json",
+        Authorization: "Token " + token,
+        "Content-type": "application/json",
       },
-      credentials: 'include',
-      body: JSON.stringify(body)
-    }))
+      credentials: "include",
+      body: JSON.stringify(body),
+    });
   }
 
   static getUser(userID, token){

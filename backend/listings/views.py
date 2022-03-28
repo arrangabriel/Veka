@@ -1,66 +1,42 @@
-from os import stat
-from urllib import response
-from wsgiref import headers
-from urllib import request
-from .serializers import ListingReadSerializer, ListingWriteSerializer
+from .serializers import ListingSerializer
 from .models import Listing, Profile
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.decorators import action
-# from rest_framework.authentication import TokenAuthentication
 
 
-class MultiSerializerViewSet(viewsets.ModelViewSet):
-    serializers = {
-        'default': None,
-    }
-
-    def get_serializer_class(self):
-        return self.serializers.get(self.action,
-                                    self.serializers['default'])
-
-
-class ListingViewSet(MultiSerializerViewSet):
+class ListingViewSet(viewsets.ModelViewSet):
 
     """
     Complete listing view.
     """
-    serializers = {
-        'create': ListingWriteSerializer,
-        'list': ListingReadSerializer,
-        'retrieve': ListingReadSerializer,
-        'default': ListingReadSerializer,
-        'metadata': ListingWriteSerializer
-    }
-
-    # Use to set permissions for operations
-    def get_permissions(self):
-        """
-        Instantiates and returns the list of permissions that this view requires.
-        """
-        any = ['list', 'metadata', 'retrieve', 'interested']
-        authenticated = ['create', 'show_interest']
-        if self.action in any:
-            permission_classes = [AllowAny]
-        elif self.action in authenticated:
-            permission_classes = [IsAuthenticated]
-        else:
-            permission_classes = [IsAdminUser]
-        return [permission() for permission in permission_classes]
-
     model = Listing
     context_object_name = 'listings'
     queryset = Listing.objects.all()
+    serializer_class = ListingSerializer
     valid_orderings = (
         'date',
         'price',
         '-date',
         '-price',
     )
+    any = ['list', 'metadata', 'retrieve', 'interested']
+    authenticated = ['create', 'show_interest', 'mark_sold']
+    # Use to set permissions for operations
 
-    # finn.no/?param1=katt&param2=pus&sort=-date
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action in self.any:
+            permission_classes = [AllowAny]
+        elif self.action in self.authenticated:
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
 
     def get_queryset(self):
         queryset = Listing.objects.all()
@@ -98,6 +74,7 @@ class ListingViewSet(MultiSerializerViewSet):
 
         return queryset
 
+    # TODO refactor interested query
     def list(self, request):
         queryset = self.filter_queryset(self.get_queryset())
 

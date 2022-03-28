@@ -9,15 +9,26 @@ import { useState } from 'react';
 const MyOwnListing = ({header,date,description,img,publisher,type, id, interestedUsers}) => {
 
     const [cookies, setCookies] = useCookies()
+    const [interestedProfiles, setInterestedProfiles] = useState([])
 
     const handleSold = (id) => {
         APIservice.SetAsSold(id, cookies)
+    }
+
+    const getInterestedUser = (interestedUsers, token) => {
+        setInterestedProfiles([])    
+        interestedUsers.map((interestedUser) => (
+            APIservice.getUser(interestedUser, token)
+            .then(resp=>resp.json())
+            .then(resp=>setInterestedProfiles(oldArray => [...oldArray, resp]))
+        ))
     }
 
     const [isOpen, setIsOpen] = useState(false);
 
     const togglePopup = () => {
         setIsOpen(!isOpen);
+        getInterestedUser(interestedUsers, cookies);
     }
 
     return (
@@ -38,7 +49,7 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id, intereste
                 <div className='listingButtonsDiv col-sm-3'>
                     <div className='container'>
                         <div className='row justify-content-end no-gutters'>
-                            <button className="btn btn-primary" onClick={togglePopup}>Vis intersserte</button>
+                            <button className="btn btn-primary" onClick={togglePopup}>Vis interesserte</button>
                         </div>
                         <div className='row justify-content-end'>
                             <button value={id} className="btn btn-primary" onClick={e=>handleSold(e.target.value)}>Marker som solgt</button>
@@ -48,7 +59,15 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id, intereste
             </div>
             {isOpen && <Popup
                 content={<>
-                <h1>{interestedUsers}</h1>
+                <h2>Interesserte brukere</h2>
+                {Object.keys(interestedProfiles).length === 0
+                    ?<h4>Ingen brukere interessert</h4>
+                    :<>
+                    {interestedProfiles.map((profile, index)=> (
+                            <h4 key={index}>Brukernavn: {profile.user.username}  Email: {profile.user.email}</h4>
+                        ))}
+                </>
+                }
                 </>}
                 handleClose={togglePopup}
             />}

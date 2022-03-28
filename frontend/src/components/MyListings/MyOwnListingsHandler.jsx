@@ -26,7 +26,6 @@ const MyOwnListingsHandler = ({userID}) => {
       .catch(error => console.log(error))
   },[userID])
 
-  console.log(MyListings)
 
   return (
 

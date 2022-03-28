@@ -44,3 +44,4 @@ class Listing(models.Model):
     price = models.PositiveBigIntegerField()
     interested_users = models.ManyToManyField(
         Profile, related_name='interested')
+    sold = models.BooleanField(default=False)

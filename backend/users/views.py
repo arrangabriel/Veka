@@ -1,8 +1,6 @@
-from urllib import response
-from .serializers import ProfileSerializer, UserSerializer, LoginSerializer
+from .serializers import ProfileSerializer, UpdateProfileSerializer, UserSerializer, LoginSerializer
 from .models import Profile
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from rest_framework import status, viewsets
 from django.contrib.auth.models import User
 from django.db import IntegrityError
@@ -10,7 +8,6 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.decorators import action
-from django.core import serializers
 
 
 class MultiSerializerViewSet(viewsets.ModelViewSet):
@@ -24,16 +21,15 @@ class MultiSerializerViewSet(viewsets.ModelViewSet):
 
 
 class ProfilesViewSet(MultiSerializerViewSet):
-
     queryset = Profile.objects.all()
 
     serializers = {
         'create': UserSerializer,
         'list': ProfileSerializer,
         'retrieve': ProfileSerializer,
-        'default': ProfileSerializer,
-        'metadata': ProfileSerializer,
-        'detail': ProfileSerializer
+        'update': UpdateProfileSerializer,
+        'default': UserSerializer,
+        'metadata': ProfileSerializer
     }
 
     def get_permissions(self):

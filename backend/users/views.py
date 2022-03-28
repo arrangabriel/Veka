@@ -1,7 +1,7 @@
 from .serializers import ProfileSerializer, UpdateProfileSerializer, UserSerializer, LoginSerializer
 from .models import Profile
 from rest_framework.response import Response
-from rest_framework import status, viewsets
+from rest_framework import status, viewsets, mixins
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
@@ -28,8 +28,8 @@ class ProfilesViewSet(MultiSerializerViewSet):
         'list': ProfileSerializer,
         'update': UpdateProfileSerializer,
         'retrieve': ProfileSerializer,
+        'metadata': ProfileSerializer,
         'default': UserSerializer,
-        'metadata': ProfileSerializer
     }
 
     def get_permissions(self):
@@ -57,27 +57,6 @@ class ProfilesViewSet(MultiSerializerViewSet):
         except IntegrityError as e:
             return Response(e.args, status=status.HTTP_400_BAD_REQUEST)
 
-    def update(self, request, *args, **kwargs):
-        print(request)
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(
-            instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        if getattr(instance, '_prefetched_objects_cache', None):
-            # If 'prefetch_related' has been applied to a queryset, we need to
-            # forcibly invalidate the prefetch cache on the instance.
-            instance._prefetched_objects_cache = {}
-
-        return Response(serializer.data)
-
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
-
     @action(methods=['get'], detail=False)
     def me(self, request):
         profile = request.user.id
@@ -86,21 +65,8 @@ class ProfilesViewSet(MultiSerializerViewSet):
         return Response(str(profile), status=status.HTTP_200_OK)
 
 
-class LoginViewSet(viewsets.ModelViewSet):
-
-    def get_permissions(self):
-        """
-        Instantiates and returns the list of permissions that this view requires.
-        """
-        print(self.action)
-        if self.action == 'create' or self.action == 'list':
-            permission_classes = [AllowAny]
-        else:
-            permission_classes = [IsAdminUser]
-        return [permission() for permission in permission_classes]
-
+class LoginViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
     serializer_class = LoginSerializer
-    queryset = User.objects.all()
 
     def create(self, request):
         username = request.data.get('username')

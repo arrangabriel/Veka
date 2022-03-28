@@ -26,8 +26,8 @@ class ProfilesViewSet(MultiSerializerViewSet):
     serializers = {
         'create': UserSerializer,
         'list': ProfileSerializer,
-        'retrieve': ProfileSerializer,
         'update': UpdateProfileSerializer,
+        'retrieve': ProfileSerializer,
         'default': UserSerializer,
         'metadata': ProfileSerializer
     }
@@ -36,9 +36,11 @@ class ProfilesViewSet(MultiSerializerViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-        if self.action == 'list' or self.action == 'create' or self.action == 'metadata':
+        any = ['list', 'retrieve', 'create', 'metadata']
+        authenticated = ['me', 'update']
+        if self.action in any:
             permission_classes = [AllowAny]
-        elif self.action == 'me' or self.action == 'retrieve':
+        elif self.action in authenticated:
             permission_classes = [IsAuthenticated]
         else:
             permission_classes = [IsAdminUser]
@@ -71,12 +73,10 @@ class ProfilesViewSet(MultiSerializerViewSet):
 
         return Response(serializer.data)
 
-    def perform_update(self, serializer):
-        serializer.save()
-
-    def partial_update(self, request, *args, **kwargs):
-        kwargs['partial'] = True
-        return self.update(request, *args, **kwargs)
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
 
     @action(methods=['get'], detail=False)
     def me(self, request):
@@ -84,6 +84,33 @@ class ProfilesViewSet(MultiSerializerViewSet):
         if not profile:
             return Response(data='Could not find a logged in profile', status=status.HTTP_403_FORBIDDEN)
         return Response(str(profile), status=status.HTTP_200_OK)
+
+
+class LoginViewSet(viewsets.ModelViewSet):
+
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        print(self.action)
+        if self.action == 'create' or self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
+
+    serializer_class = LoginSerializer
+    queryset = User.objects.all()
+
+    def create(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 class LogoutViewSet(viewsets.ViewSet):

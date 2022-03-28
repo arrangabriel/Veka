@@ -16,13 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from listings.views import ListingViewSet
-from users.views import ProfilesViewSet, LogoutViewSet, EditViewSet
+from users.views import ProfilesViewSet, LogoutViewSet, EditViewSet, LoginViewSet
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
 router.register(r'profiles', ProfilesViewSet, basename="profiles")
 router.register(r'logout', LogoutViewSet, basename="logout")
+router.register(r'login', LoginViewSet, basename="login")
 router.register(r'edit', EditViewSet, basename="edit")
 router.register(r'listings', ListingViewSet, basename='listing')
 

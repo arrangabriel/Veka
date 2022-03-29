@@ -6,13 +6,14 @@ import {useCookies} from "react-cookie";
 import Popup from '../Popup/Popup';
 import { useState } from 'react';
 
-const MyOwnListing = ({header,date,description,img,publisher,type, id, interestedUsers}) => {
+const MyOwnListing = ({header,date,description,img,publisher,type, id, interestedUsers, setUpdate, sold}) => {
 
     const [cookies, setCookies] = useCookies()
     const [interestedProfiles, setInterestedProfiles] = useState([])
 
     const handleSold = (id) => {
         APIservice.SetAsSold(id, cookies)
+        setUpdate()
     }
 
     const getInterestedUser = (interestedUsers, token) => {
@@ -53,7 +54,10 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id, intereste
                             <button className="btn btn-primary" onClick={togglePopup}>Vis interesserte</button>
                         </div>
                         <div className='row justify-content-end'>
-                            <button value={id} className="btn btn-primary" onClick={e=>handleSold(e.target.value)}>Marker som solgt</button>
+                            {sold
+                                ?<button value={id} className="btn btn-success" disabled>Solgt</button>
+                                :<button value={id} className="btn btn-success" onClick={e=>handleSold(e.target.value)}>Marker som solgt</button>
+                            }
                         </div>
                     </div>
                 </div>

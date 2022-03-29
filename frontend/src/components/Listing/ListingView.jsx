@@ -52,6 +52,7 @@ const ListingView = ({token}) => {
     .then(resp=>setListings(resp))
   },[state,sorting,token,update]
   )
+  console.log(listings)
   
   
   
@@ -100,7 +101,7 @@ const ListingView = ({token}) => {
 
       <div className='listingView'>
         {listings.map((listing, index) => (
-          <Listing key={index} header={listing.title} description={listing.description} publisher={listing.username} type={listing.listing_type} id={listing.id} interested={listing.interested} setListings={handleInterest}></Listing>
+          <Listing owner={listing.owner.id} key={index} header={listing.title} description={listing.description} publisher={listing.username} type={listing.listing_type} id={listing.id} interested={listing.interested} setListings={handleInterest}></Listing>
         ))}
       </div>
 

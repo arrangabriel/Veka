@@ -14,6 +14,7 @@ const ListingView = ({token}) => {
     setIsOpen(!isOpen);
   }
 
+
   const [listings, setListings] = useState([])
 
   const [sorting, setSorting] =useState('date')

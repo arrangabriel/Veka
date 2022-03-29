@@ -13,13 +13,15 @@ export default class APIservice {
 
 
   static getListings(queries,token){
-    console.log("FETCHING from: http://127.0.0.1:8000/api/listings/"+queries)
+    let headerdict = {
+      'Content-type': 'application/json',
+    }
+    if (token.mytoken === "") {
+      headerdict['Authorization'] = 'Token ' + token.mytoken
+    }
     return(fetch('http://127.0.0.1:8000/api/listings/'+queries, {
       'method': 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': 'Token ' + token.mytoken
-      },
+      headers: headerdict,
       credentials: 'include',
     }))
   }

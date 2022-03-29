@@ -13,8 +13,6 @@ describe("CreateListing Form", () => {
     expect(screen.getByText(/arrangementtype/i)).toBeInTheDocument();
     expect(screen.getByText(/dato/i)).toBeInTheDocument();
     expect(screen.getByText(/sted/i)).toBeInTheDocument();
-    expect(screen.getByText(/mer om arrangementet/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', {name: /publiser/i})).toBeInTheDocument();
-    
+    expect(screen.getByText(/mer om arrangementet/i)).toBeInTheDocument();    
   });
 });

@@ -6,16 +6,16 @@ import CreateListing from './components/Listing/CreateListing';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState, useEffect } from 'react';
+//import { useState, useEffect } from 'react';
 import React from 'react';
 import ProfilePage from './components/Profile/ProfilePage';
-import { useCookies } from 'react-cookie'
+//import { useCookies } from 'react-cookie'
 
 function App() {
 
-  const [token, setToken] = useCookies(['mytoken'])
+  //const [token, setToken] = useCookies(['mytoken'])
 
-  // console.log(token)
+  //console.log(token)
   // useEffect(()=>{
   //   fetch('http://127.0.0.1:8000/api/listings/', {
   //     'method':'POST',
@@ -37,14 +37,16 @@ function App() {
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container">
-            <Link className="navbar-brand" to={"/"}>Veka</Link>
+            <Link className="navbar-brand" to={"/"}>
+              <img border="0" src="vekaIcon.png" alt="logo"/>
+            </Link>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-in"}>Login</Link>
+                  <Link className="nav-link" to={"/sign-in"}>Logg inn</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
+                  <Link className="nav-link" to={"/sign-up"}>Registrer bruker</Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to={"/my-user"}>Min bruker</Link>

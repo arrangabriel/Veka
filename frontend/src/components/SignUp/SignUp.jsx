@@ -1,3 +1,4 @@
+import "./SignUp.css";
 import React from "react";
 import {useState} from 'react';
 import APIservice from "../../APIservice";
@@ -15,7 +16,7 @@ const SignUp = () => {
     }
 
     return (
-        <div>
+        <div className="siteElements">
             <h3>Registrer bruker</h3>
 
             <div className="form-group">
@@ -32,11 +33,10 @@ const SignUp = () => {
                 <label>Passord</label>
                 <input value={password} onInput={e => setPassword(e.target.value)}type="password" className="form-control" placeholder="Skriv passord" required="required" maxLength="40"/>
             </div>
-
-            <button onClick={sendRequest} className="btn btn-primary btn-block">Registrer meg</button>
-            <p className="forgot-password text-right">
-                Allerede registrert? <a href="/sign-in">Logg inn</a>
-            </p>
+            <br>
+            </br>
+            <a href="/" id="regBut" className="btn btn-primary btn-block" onClick={sendRequest}>Registrer meg</a>
+            <p id="allLogIn" className="forgot-password text-right"> Allerede registrert? <a href="/sign-in">Logg inn</a></p>
         </div>
     );
 }

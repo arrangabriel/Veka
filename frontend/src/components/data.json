@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "event": "Fest på grynerløkka",
+        "selling": true,
+        "publisher": "David",
+        "description": "Stor fest"
+    },
+    {
+        "id": 2,
+        "event": "Fest i stavanger",
+        "selling": false,
+        "publisher": "David",
+        "description": "Stor fest"
+    },
+    {
+        "id": 3,
+        "event": "Fest i stavanger",
+        "selling": true,
+        "publisher": "David",
+        "description": "Stor fest"
+    },
+    {
+        "id": 4,
+        "event": "UKA festival",
+        "selling": true,
+        "publisher": "Selma",
+        "description": "Selger veldig billig"
+    },
+    {
+        "id": 5,
+        "event": "Paint n Sip",
+        "selling": true,
+        "publisher": "Einar",
+        "description": "Kjøpte en for mye"
+    },
+    {
+        "id": 6,
+        "event": "Tix konsert",
+        "selling": true,
+        "publisher": "Sander",
+        "description": "Gir bort gratis"
+    }
+]

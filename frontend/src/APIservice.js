@@ -13,13 +13,15 @@ export default class APIservice {
 
 
   static getListings(queries,token){
-    console.log("FETCHING from: http://127.0.0.1:8000/api/listings/"+queries)
+    let headerdict = {
+      'Content-type': 'application/json',
+    }
+    if (token.mytoken !== undefined) {
+      headerdict['Authorization'] = 'Token ' + token.mytoken
+    }
     return(fetch('http://127.0.0.1:8000/api/listings/'+queries, {
       'method': 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': 'Token ' + token.mytoken
-      },
+      headers: headerdict,
       credentials: 'include',
     }))
   }
@@ -52,20 +54,19 @@ export default class APIservice {
   }
 
   static EditUser(body, userID, token) {
-    return (fetch('http://127.0.0.1:8000/api/edit/' + userID, {
-      method: 'PUT',
+    return fetch("http://127.0.0.1:8000/api/profiles/" + userID, {
+      method: "PUT",
       headers: {
-        Accept: 'application/json',
-        'Authorization': 'Token ' + token,
-        'Content-type': 'application/json',
+        Accept: "application/json",
+        Authorization: "Token " + token,
+        "Content-type": "application/json",
       },
-      credentials: 'include',
-      body: JSON.stringify(body)
-    }))
+      credentials: "include",
+      body: JSON.stringify(body),
+    });
   }
 
   static getUser(userID, token){
-    console.log("FETCHING from: http://127.0.0.1:8000/api/profiles/" + userID)
     return(fetch('http://127.0.0.1:8000/api/profiles/'+ userID + '/', {
       'method': 'GET',
       headers: {

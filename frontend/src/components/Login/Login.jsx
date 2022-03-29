@@ -1,8 +1,10 @@
-import React from "react";
-import {Link, Router} from "react-router-dom";
-import {useState, useEffect} from 'react';
+import './Login.css';
+import React, { useEffect } from "react";
+import {useState} from 'react';
 import APIservice from "../../APIservice";
 import {useCookies} from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -10,19 +12,42 @@ import {useCookies} from 'react-cookie';
 const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [username,setUsername]=useState('');
-    const [token, setToken]=useCookies(['mytoken']);
+    const [token, setToken,removeToken]=useCookies(['mytoken']);
+    let navigate=useNavigate();
+    const [fail,setFail]=useState('');
+
+    useEffect(()=>{
+        removeToken('mytoken')
+    },[])
 
 
     const bug=()=>{
-        APIservice.Login({username,password})
-        .then(resp=>resp.json())
-        .then(resp=>setToken('mytoken',resp.token))
-        .then(error=>console.log(error))
+        if(password===''){
+            setFail('Vennligst skriv inn passord')
+        }
+        else if(username===''){
+            setFail('Vennligst skriv inn brukernavn')
+        }
+        else{
+            APIservice.Login({username,password})
+            .then(resp=>{
+                if(resp.status!==200){
+                    setFail('Brukernavn eller passord er feil')
+                }else{
+                    (resp.json()).then(
+                        data=>{
+                            setToken('mytoken',data.token)
+                            navigate('../',{replace: true})
+                        }
+                    )
+                }
+            })
+        }
     }
 
 
   return (
-  <div>
+  <div className='siteElements'>
     <h3>Logg inn</h3>
 
     <div className="form-group">
@@ -41,13 +66,17 @@ const LoginForm = () => {
             <label className="custom-control-label" htmlFor="customCheck1">Husk meg</label>
         </div>
     </div>
-
-    <button className="btn btn-primary btn-block" onClick={bug}>Logg inn</button>
-    <p className="forgot-password text-right">
-        Glemt <a href="#">passord?</a>
-    </p>
+    <br></br>
+    <p style={{color:'red'}}>{fail}</p>
+    <br></br>
+    <button id="logIn" className="btn btn-primary btn-block" onClick={bug}>Logg inn</button>
+    <p id="forgPas" className="forgot-password text-right"> <a href="#">Glemt passord?</a></p>
+    <br></br>
+    <br></br>
     <a href="/sign-up" className="btn btn-secondary"> Registrer bruker</a>
 </div>);
+
+
 }
 
 export default LoginForm

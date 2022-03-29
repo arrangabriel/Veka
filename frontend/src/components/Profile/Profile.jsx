@@ -19,7 +19,7 @@ const Profile = ({ first_name, last_name, bio, user, avatar, location, userID, t
             <div className="card">
                 <div className="row no-gutters">
                     <div className="col-sm">
-                        <img className="card-img" src={blank_profile} alt="Profile picture"></img>
+                        <img className="card-img" src={blank_profile} alt="Profile"></img>
                     </div>
                     <div className="col-sm-5">
                         <div className="card-body">
@@ -35,6 +35,7 @@ const Profile = ({ first_name, last_name, bio, user, avatar, location, userID, t
                             <div className='row justify-content-end no-gutters'>
                                 <button onClick={togglePopup} className="btn btn-primary">Rediger bruker</button>
                             </div>
+                            <a href='../sign-in' className="btn btn-secondary">Logg ut</a>
                         </div>
                     </div>
                 </div>

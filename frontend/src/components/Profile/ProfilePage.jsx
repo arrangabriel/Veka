@@ -38,10 +38,14 @@ const ProfilePage = ({ token }) => {
       .catch(error => console.log(error))
   }, [userID])
 
+
   return (
     <div>
       <Profile user={profile.user} first_name={profile.first_name} last_name={profile.last_name} bio={profile.bio} location={profile.location} avatar="blank_profile" token={token} userID={userID}></Profile>
-      <MyOwnListingsHandler userID={userID}></MyOwnListingsHandler>
+      {profile.user.username === ""
+      ?<h1 className="siteElements">Ingen billetter ute</h1>
+      :<MyOwnListingsHandler userID={userID}></MyOwnListingsHandler>
+      }
     </div>
   )
 }

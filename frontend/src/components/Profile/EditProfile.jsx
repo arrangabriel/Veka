@@ -10,7 +10,6 @@ const EditProfile = ({userID, token}) => {
     const [LastName, setLastName] = useState('');
     const [bio, setBio] = useState('');
     const [location, setLocation] = useState('');
-
     
     const editUser = () => {
 
@@ -19,9 +18,7 @@ const EditProfile = ({userID, token}) => {
             last_name: LastName,
             bio: bio,
             location: location
-
         }
-
 
         APIservice.EditUser(body, userID, token)
         .then(resp => console.log(resp))

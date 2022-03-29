@@ -54,7 +54,7 @@ const UserPost = () => {
                     <option value="" disabled="disabled">Velg...</option>
                     <option value="c">Konsert</option>
                     <option value="t">Teater</option>
-                    <option value="p">Fest</option>
+                    <option value="p">Festival</option>
                 </select>
             </div>
 

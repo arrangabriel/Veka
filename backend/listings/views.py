@@ -72,7 +72,7 @@ class ListingViewSet(viewsets.ModelViewSet):
         queryset = queryset.order_by(sort)
         if user is not None:
             queryset = queryset.filter(owner__id=user)
-        if ignore_self is not None:
+        if ignore_self is not None and self.request.user.is_authenticated:
             queryset = queryset.exclude(owner__id=self.request.user.id)
         if listing_type:
             queryset = queryset.filter(listing_type__in=listing_type)

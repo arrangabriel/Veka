@@ -16,7 +16,7 @@ export default class APIservice {
     let headerdict = {
       'Content-type': 'application/json',
     }
-    if (token.mytoken === "") {
+    if (token.mytoken !== undefined) {
       headerdict['Authorization'] = 'Token ' + token.mytoken
     }
     return(fetch('http://127.0.0.1:8000/api/listings/'+queries, {

@@ -9,11 +9,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import { useState, useEffect } from 'react';
 import React from 'react';
 import ProfilePage from './components/Profile/ProfilePage';
-//import { useCookies } from 'react-cookie'
+import { useCookies } from 'react-cookie'
 
 function App() {
 
-  //const [token, setToken] = useCookies(['mytoken'])
+  const [token, setToken] = useCookies(['mytoken'])
 
   //console.log(token)
   // useEffect(()=>{

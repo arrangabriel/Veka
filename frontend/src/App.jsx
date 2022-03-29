@@ -40,14 +40,9 @@ function App() {
             <Link className="navbar-brand" to={"/"}>
               <img border="0" src="vekaIcon.png" alt="logo"/>
             </Link>
-            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+            {(typeof(token.mytoken)!=='undefined')?
+              <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-in"}>Logg inn</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-up"}>Registrer bruker</Link>
-                </li>
                 <li className="nav-item">
                   <Link className="nav-link" to={"/my-user"}>Min bruker</Link>
                 </li>
@@ -56,6 +51,9 @@ function App() {
                 </li>
               </ul>
             </div>
+            :''
+            }
+            
           </div>
         </nav>
 

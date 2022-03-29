@@ -12,9 +12,13 @@ import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [username,setUsername]=useState('');
-    const [token, setToken]=useCookies(['mytoken']);
+    const [token, setToken,removeToken]=useCookies(['mytoken']);
     let navigate=useNavigate();
     const [fail,setFail]=useState('');
+
+    useEffect(()=>{
+        removeToken('mytoken')
+    },[])
 
 
     const bug=()=>{

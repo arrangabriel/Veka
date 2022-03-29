@@ -44,6 +44,9 @@ const Listing = ({header,date,description,img,publisher,type,id,interested,setLi
                     </div>
                 </div>
                 <div className='listingButtonsDiv col-sm-3'>
+                {(typeof(cookies.mytoken)==='undefined')?
+                ''
+                :<>
                     <div className='container'>
                         <div className='row justify-content-end no-gutters'>
                             <button value={owner} className="btn btn-primary" onClick={e=>handleVisitOwner(e.target.value)}>Besøk bruker</button>
@@ -55,6 +58,7 @@ const Listing = ({header,date,description,img,publisher,type,id,interested,setLi
                             }
                         </div>
                     </div>
+                </>}
                 </div>
             </div>
         </div>

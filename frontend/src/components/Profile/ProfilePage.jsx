@@ -43,7 +43,7 @@ const ProfilePage = ({ token }) => {
     <div>
       <Profile user={profile.user} first_name={profile.first_name} last_name={profile.last_name} bio={profile.bio} location={profile.location} avatar="blank_profile" token={token} userID={userID}></Profile>
       {profile.user.username === ""
-      ?<h1 class="siteElements">Ingen billetter ute</h1>
+      ?<h1 className="siteElements">Ingen billetter ute</h1>
       :<MyOwnListingsHandler userID={userID}></MyOwnListingsHandler>
       }
     </div>

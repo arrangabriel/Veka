@@ -112,8 +112,10 @@ const ListingView = ({token}) => {
         </>}
         handleClose={togglePopup}
       />}
-
-      <button type="button" className="addListing btn btn-primary" onClick={togglePopup}>Nytt innlegg</button>
+      {(typeof(token.mytoken)==='undefined')?
+        <a href='/sign-in' className='addListing btn btn-primary'>Logg inn her</a>
+      :<button type="button" className="addListing btn btn-primary" onClick={togglePopup}>Nytt innlegg</button>
+      }
     </div>
   )
 }

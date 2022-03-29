@@ -16,6 +16,7 @@ const UserPost = () => {
     const [description, setDescription] = useState('');
     const [listingType, setListingType] = useState('');
 
+
     const [token, setToken] = useCookies(['mytoken'])
 
     const SendRequest = () => {

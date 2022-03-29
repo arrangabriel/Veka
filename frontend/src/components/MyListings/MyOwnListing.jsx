@@ -24,6 +24,7 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id, intereste
         ))
     }
 
+
     const [isOpen, setIsOpen] = useState(false);
 
     const togglePopup = () => {
@@ -42,7 +43,7 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id, intereste
                     <div className="card-body">
                         <h5 className="card-title">{header}</h5>
                         <p className="card-text">{description}</p>
-                        <p className='card-text' style={{color:'green'}}>{type==='b' ? 'Til salgs' : 'Ønskes kjøpt'}</p>
+                        <p className='card-text' style={{color:'green'}}>{type==='b' ? 'Ønskes kjøpt' : 'Til salgs'}</p>
                         <p className='card-text'>{publisher}</p>
                     </div>
                 </div>
@@ -64,7 +65,7 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id, intereste
                     ?<h4>Ingen brukere interessert</h4>
                     :<>
                     {interestedProfiles.map((profile, index)=> (
-                            <h4 key={index}>Brukernavn: {profile.user.username}  Email: {profile.user.email}</h4>
+                            <h6 key={index}>Brukernavn: {profile.user.username}  Email: {profile.user.email}</h6>
                         ))}
                 </>
                 }

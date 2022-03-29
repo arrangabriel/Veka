@@ -17,7 +17,7 @@ const MyOwnListing = ({header,date,description,img,publisher,type, id, intereste
     }
 
     const getInterestedUser = (interestedUsers, token) => {
-        setInterestedProfiles([])    
+        setInterestedProfiles([])
         interestedUsers.map((interestedUser) => (
             APIservice.getUser(interestedUser, token)
             .then(resp=>resp.json())

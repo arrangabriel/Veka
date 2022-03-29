@@ -6,6 +6,8 @@ import MyOwnListing from './MyOwnListing';
 const MyOwnListingsHandler = ({userID}) => {
 
   const [MyListings, setMyListings] = useState([])
+  const [update,setUpdate]=useState(true)
+
 
   useEffect(() => {
     let url = 'http://127.0.0.1:8000/api/listings/?user=' + userID
@@ -19,7 +21,7 @@ const MyOwnListingsHandler = ({userID}) => {
       .then(resp => resp.json())
       .then(resp => setMyListings(resp))
       .catch(error => console.log(error))
-  },[userID])
+  },[userID,update])
 
   console.log(userID)
 
@@ -27,7 +29,7 @@ const MyOwnListingsHandler = ({userID}) => {
 
     <div>
       {MyListings.map((Mylisting, index) => (
-        <MyOwnListing key={index} header={Mylisting.title} description={Mylisting.description} publisher={Mylisting.usernam} type={Mylisting.event_type} id={Mylisting.id}></MyOwnListing>
+        <MyOwnListing key={index} header={Mylisting.title} description={Mylisting.description} publisher={Mylisting.usernam} type={Mylisting.event_type} id={Mylisting.id} setUpdate={setUpdate} sold={Mylisting.sold}></MyOwnListing>
       ))}
     </div>
   )

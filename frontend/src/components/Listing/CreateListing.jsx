@@ -1,3 +1,4 @@
+import "./CreateListing.css"
 import React, { useState } from 'react'
 import DatePicker from "react-datepicker";
 import APIservice from "../../APIservice";
@@ -34,7 +35,7 @@ const UserPost = () => {
             .then(resp => console.log(resp))
     }
     return (
-        <div>
+        <div className='siteElements'>
             <h3>Nytt innlegg</h3>
 
             <div className="form-group">
@@ -90,7 +91,7 @@ const UserPost = () => {
                 <input type="radio" value="b" name="listingType" /> Ønskes kjøpt <br></br>
                 <input type="radio" value="s" name="listingType" /> Selges
             </div>
-            <button onClick={SendRequest} type="submit" className="btn btn-primary btn-block">Publiser</button>
+            <a href="/" type="submit" className="btn btn-primary btn-block" onClick={SendRequest}>Publiser</a>
         </div >
     )
 }
